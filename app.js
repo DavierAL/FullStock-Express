@@ -23,6 +23,23 @@ app.set("views", "./views");
 app.use(expressLayouts);
 app.set("layout", "layout");
 
+// Middleware para definir el título de la página (namePage) en todas las vistas
+const pageTitleByPath = {
+  "/": "Inicio",
+  "/cart": "Carrito",
+  "/checkout": "Checkout",
+  "/order-confirmation": "Confirmación de compra",
+  "/about": "Quienes somos",
+  "/terms": "Términos y Condiciones",
+  "/privacy": "Política de Privacidad",
+};
+
+app.use((req, res, next) => {
+  const path = req.path;
+  res.locals.namePage = pageTitleByPath[path] || "Full Stock";
+  next();
+});
+
 // Path de mi data.json
 const DATA_PATH = path.join("data", "data.json"); // "./data/data.json"
 
@@ -57,7 +74,10 @@ app.get("/category/:slug", async (req, res) => {
 
   if (!categoryFind) {
     return res.status(404).render("404", {
-      namePage: "Error",
+      namePage: "Error categoría",
+      title: "Página no encontrada",
+      message: "Categoria no encontrada",
+      path: "/",
     });
   }
 
@@ -78,9 +98,32 @@ app.get("/category/:slug", async (req, res) => {
   });
 });
 
-app.get("/product/:id", (req, res) => {
+app.get("/product/:id", async (req, res) => {
+  const { id } = req.params;
+
+  // Leer mi archivo data.json
+  const dataJson = await fs.readFile(DATA_PATH, "utf-8");
+
+  // Convertir el json a objeto
+  const data = JSON.parse(dataJson);
+
+  const { products } = data;
+
+  // Buscamos el producto por su ID
+  const productFinded = products.find((product) => product.id === parseInt(id));
+
+  if (!productFinded) {
+    return res.status(404).render("404", {
+      namePage: "Error",
+      title: "Página no encontrada",
+      message: "Producto no encontrado",
+      path: "/",
+    });
+  }
+
   res.render("product", {
     namePage: "Producto",
+    product: productFinded,
   });
 });
 

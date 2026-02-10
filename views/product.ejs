@@ -2,18 +2,15 @@
   <div class="container product__container">
     <div class="product__image">
       <img
-        src="/images/polos/polo-react.png"
-        alt="Polo React"
+        src="<%= product.imgSrc %>"
+        alt="<%= product.name %>"
         class="product__image_content"
       />
     </div>
     <div class="product__info">
-      <h1 class="product__title">Polo React</h1>
-      <p class="product__price">S/ 20</p>
-      <p class="product__description">
-        Viste tu pasión por React con estilo y comodidad en cada línea de
-        código.
-      </p>
+      <h1 class="product__title"><%= product.name %></h1>
+      <p class="product__price">S/ <%= (product.price / 100).toFixed(2) %></p>
+      <p class="product__description"><%= product.description %></p>
       <form>
         <button class="button button--xl product__button" type="submit">
           Agregar al Carrito
@@ -23,13 +20,11 @@
       <div class="product__features">
         <h2 class="product__features_title">Características</h2>
         <ul class="product__features_list">
-          <li>
-            Estampado resistente que mantiene sus colores vibrantes lavado tras
-            lavado.
-          </li>
-          <li>Hecho de algodón suave que asegura comodidad y frescura.</li>
-          <li>Costuras reforzadas para una mayor durabilidad.</li>
-          <li>Corte moderno que se adapta perfectamente al cuerpo.</li>
+          <% product?.features.forEach((feature, index)=> { %>
+            <li id="feat-<%= index %>">
+              <%= feature %>
+            </li>
+          <% }) %>
         </ul>
       </div>
     </div>
