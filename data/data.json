@@ -349,6 +349,19 @@
       ]
     }
   ],
-  "carts": [],
+  "carts": [
+    {
+      "id": 1,
+      "items": [
+        { "productId": 18, "quantity": 1 },
+        { "productId": 19, "quantity": 17 },
+        { "productId": 5, "quantity": 1 },
+        { "productId": 3, "quantity": 1 },
+        { "productId": 15, "quantity": 1 },
+        { "productId": 13, "quantity": 1 },
+        { "productId": 20, "quantity": 4 }
+      ]
+    }
+  ],
   "orders": []
 }

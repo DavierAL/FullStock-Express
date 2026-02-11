@@ -11,8 +11,10 @@
       <h1 class="product__title"><%= product.name %></h1>
       <p class="product__price">S/ <%= (product.price / 100).toFixed(2) %></p>
       <p class="product__description"><%= product.description %></p>
-      <form>
-        <button class="button button--xl product__button" type="submit">
+      <form method="post" action="/cart/add-product">
+        <input type="hidden" name="productId" value="<%= product.id %>">
+        <input type="hidden" name="pathProduct" value="/product/<%= product.id%>" >
+        <button class="button button--xl product__button" type="submit" >
           Agregar al Carrito
         </button>
       </form>

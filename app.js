@@ -35,9 +35,18 @@ const pageTitleByPath = {
   "/privacy": "Política de Privacidad",
 };
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const path = req.path;
   res.locals.namePage = pageTitleByPath[path] || "Full Stock";
+
+  // Leer mi archivo data.json
+  const dataJson = await fs.readFile(DATA_PATH, "utf-8");
+
+  // Convertir el json a objeto
+  const data = JSON.parse(dataJson);
+  res.locals.countCartProducts = data.carts[0]
+    ? data.carts[0].items.reduce((total, item) => total + item.quantity, 0)
+    : 0;
   next();
 });
 
@@ -140,6 +149,53 @@ app.get("/product/:id", async (req, res) => {
     namePage: "Producto",
     product: productFinded,
   });
+});
+
+app.post("/cart/add-product", async (req, res) => {
+  const { productId, pathProduct } = req.body;
+
+  // Leer mi archivo data.json
+  const dataJson = await fs.readFile(DATA_PATH, "utf-8");
+
+  // Convertir el json a objeto
+  const data = JSON.parse(dataJson);
+
+  const { products, carts } = data;
+
+  // Buscamos el producto que el usuario agrego al carrito
+  const productFinded = products.find(
+    (product) => product.id === parseInt(productId),
+  );
+
+  if (!productFinded) {
+    return res.status(404).render("404", {
+      namePage: "Error",
+      title: "Producto no encontrado",
+      message: "El producto seleccionado no se encuentra disponible",
+      path: pathProduct,
+    });
+  }
+
+  const cart = carts[0] || { id: 1, items: [] };
+
+  // Buscamos el producto que el usuario agrego al carrito de compras
+  const cartItem = cart.items.find(
+    (product) => product.productId === parseInt(productId),
+  ); // { productId: 2, quantity: 1 }
+
+  if (cartItem) {
+    cartItem.quantity += 1;
+  } else {
+    cart.items.push({ productId: parseInt(productId), quantity: 1 });
+  }
+
+  // Guardar el carrito en mi objeto de carts
+  data.carts[0] = cart;
+
+  // Escribir en mi archivo data.json
+  await fs.writeFile(DATA_PATH, JSON.stringify(data));
+
+  res.redirect(`/product/${productId}`);
 });
 
 app.get("/cart", (req, res) => {
