@@ -2,42 +2,54 @@
   <div class="container cart">
     <h1 class="cart__title">Carrito de compras</h1>
     <div class="cart__container">
-      <div class="cart__item">
+      <% cartItems.forEach((item) => { %>
+       <div id="<%= `product-${item.productId}` %>" class="cart__item">
         <div class="cart__item-image">
           <img
-            src="/images/polos/polo-react.png"
-            alt="Polo React"
+            src="<%= item.product.imgSrc %>"
+            alt="<%= item.product.name %>"
             class="cart__item-image-content"
           />
         </div>
         <div class="cart__item-details">
           <div class="cart__item-header">
-            <h2 class="cart__item-title">Polo React</h2>
-            <form>
+            <h2 class="cart__item-title"><%= item.product.name %></h2>
+            <form method="post" action="/cart/delete-item">
+              <input type="hidden" name="productId" value="<%= item.product.id %>">
               <button
                 class="button button--sm-icon button--outline"
                 aria-label="Eliminar artículo"
+                type="submit"
               >
                 <img src="/images/icons/trash.svg" alt="Eliminar artículo" />
               </button>
             </form>
           </div>
           <div class="cart__item-footer">
-            <p class="cart__item-price">S/ 20</p>
+            <p class="cart__item-price">Precio: S/ <%= (item.product.price / 100).toFixed(2) %></p>
+            <p class="cart__item-price">SubTotal: S/ <%= (item.subtotal).toFixed(2) %></p>
+            
             <div class="cart__item-quantity">
-              <form>
+              <form method="post" 
+              action="<%= item.quantity === 1 ? '/cart/delete-item' : '/cart/update-item' %>">
+                <input type="hidden" name="productId" value="<%= item.product.id %>">
+                <input type="hidden" name="quantity" value="<%= item.quantity - 1 %>">
                 <button
                   class="button button--sm-icon button--outline"
                   aria-label="Reducir cantidad"
+                  type="submit"
                 >
                   <img src="/images/icons/minus.svg" alt="Reducir cantidad" />
                 </button>
               </form>
-              <span class="cart__item-quantity-display">2</span>
-              <form>
+              <span class="cart__item-quantity-display"><%= item.quantity %></span>
+              <form method="post" action="/cart/update-item">
+                <input type="hidden" name="productId" value="<%= item.product.id %>">
+                <input type="hidden" name="quantity" value="<%= item.quantity + 1 %>">
                 <button
                   class="button button--sm-icon button--outline"
                   aria-label="Aumentar cantidad"
+                  type="submit"
                 >
                   <img src="/images/icons/plus.svg" alt="Aumentar cantidad" />
                 </button>
@@ -46,53 +58,10 @@
           </div>
         </div>
       </div>
-      <div class="cart__item">
-        <div class="cart__item-image">
-          <img
-            src="/images/tazas/taza-github.png"
-            alt="Taza GitHub"
-            class="cart__item-image-content"
-          />
-        </div>
-        <div class="cart__item-details">
-          <div class="cart__item-header">
-            <h2 class="cart__item-title">Taza GitHub</h2>
-            <form>
-              <button
-                class="button button--sm-icon button--outline"
-                aria-label="Eliminar artículo"
-              >
-                <img src="/images/icons/trash.svg" alt="Eliminar artículo" />
-              </button>
-            </form>
-          </div>
-          <div class="cart__item-footer">
-            <p class="cart__item-price">S/ 14.99</p>
-            <div class="cart__item-quantity">
-              <form>
-                <button
-                  class="button button--sm-icon button--outline"
-                  aria-label="Reducir cantidad"
-                >
-                  <img src="/images/icons/minus.svg" alt="Reducir cantidad" />
-                </button>
-              </form>
-              <span class="cart__item-quantity-display">1</span>
-              <form>
-                <button
-                  class="button button--sm-icon button--outline"
-                  aria-label="Aumentar cantidad"
-                >
-                  <img src="/images/icons/plus.svg" alt="Aumentar cantidad" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      <% }) %>
       <div class="cart__total">
         <p>Total</p>
-        <p>S/ 54.99</p>
+        <p>S/ <%= total.toFixed(2) %></p>
       </div>
       <div class="cart__action">
         <a class="button button--lg cart__action-button" href="/checkout"
