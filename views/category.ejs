@@ -1,8 +1,12 @@
 <section class="category-header">
   <div class="container">
     <div class="category-header__content">
-      <h1 class="category-header__title"><%= category.name %></h1>
-      <p class="category-header__description"><%= category.description %></p>
+      <h1 class="category-header__title">
+        <%= category.name %>
+      </h1>
+      <p class="category-header__description">
+        <%= category.description %>
+      </p>
     </div>
   </div>
 </section>
@@ -15,66 +19,50 @@
           <div class="price-filter__inputs">
             <div class="price-filter__field">
               <label for="minPrice" class="price-filter__label">Min</label>
-              <input
-                id="minPrice"
-                type="number"
-                name="minPrice"
-                min="0"
-                step="0.01"
-                value=<%= minPrice %>
+              <input id="minPrice" type="number" name="minPrice" min="0" step="0.01" value=<%=minPrice %>
               />
             </div>
             <div class="price-filter__field">
               <label for="maxPrice" class="price-filter__label">Max</label>
-              <input
-                id="maxPrice"
-                type="number"
-                name="maxPrice"
-                min="0"
-                step="0.01"
-                value=<%= maxPrice %>
+              <input id="maxPrice" type="number" name="maxPrice" min="0" step="0.01" value=<%=maxPrice %>
               />
             </div>
           </div>
         </fieldset>
 
-        <button
-          type="submit"
-          class="button button--xl button--secondary price-filter__button"
-        >
+        <button type="submit" class="button button--xl button--secondary price-filter__button">
           Filtar Productos
         </button>
       </form>
-      <% if(products.length == 0) { %>
+      <% if(products.length===0) { %>
         <div class="products__no-stock">
           <h3 class="products__no-stock-title">No hay productos para esta categoría.</h3>
           <p class="products__no-stock-description">Intenta cambiar de categoría o los filtros aplicados.</p>
           <img src="/images/icons/no-stock.svg" alt="">
         </div>
-      <% }else { %>
-      <div class="products__grid">
-        <% for (const product of products) { %>
-        <a href="/product/<%= product.id %>" class="product-card">
-          <div class="product-card__container">
-            <div class="product-card__image-container">
-              <img
-                src="<%= product.imgSrc %>"
-                alt="<%= product.name %>"
-                class="product-card__image"
-              />
-            </div>
-            <div class="product-card__content">
-              <h2 class="product-card__title"><%= product.name %></h2>
-              <p class="product-card__description">
-                <%= product.description %>
-              </p>
-              <p class="product-card__price">S/ <%= (product.price / 100).toFixed(2) %></p>
-            </div>
+        <% }else { %>
+          <div class="products__grid">
+            <% for (const product of products) { %>
+              <a href="/product/<%= product.id %>" class="product-card">
+                <div class="product-card__container">
+                  <div class="product-card__image-container">
+                    <img src="<%= product.imgSrc %>" alt="<%= product.name %>" class="product-card__image" />
+                  </div>
+                  <div class="product-card__content">
+                    <h2 class="product-card__title">
+                      <%= product.name %>
+                    </h2>
+                    <p class="product-card__description">
+                      <%= product.description %>
+                    </p>
+                    <p class="product-card__price">S/ <%= (product.price / 100).toFixed(2) %>
+                    </p>
+                  </div>
+                </div>
+              </a>
+              <% } %>
           </div>
-        </a>
-        <% } %>
-      </div>
-      <% } %>
+          <% } %>
     </div>
   </div>
 </section>
