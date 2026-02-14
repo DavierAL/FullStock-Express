@@ -31,3 +31,10 @@
 .price-filter__button {
   width: 100%;
 }
+
+.price-filter__error {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  color: #dc2626;
+  margin-top: -0.5rem;
+}

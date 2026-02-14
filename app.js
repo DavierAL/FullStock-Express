@@ -1,11 +1,6 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
-import {
-  readData,
-  writeData,
-  parsePriceToCents,
-  validationsPrices,
-} from "./utils/utils.js";
+import { readData, writeData } from "./utils/utils.js";
 
 // Puerto de escucha de peticiones
 const PORT = process.env.PORT || 3000;
@@ -62,26 +57,12 @@ app.get("/", (req, res) => {
 app.get("/category/:slug", async (req, res) => {
   try {
     const { slug: categorySlug } = req.params;
-    const {
-      minPrice: minPriceQuery,
-      maxPrice: maxPriceQuery,
-      error: errorQuery,
-    } = req.query;
-
-    const error = errorQuery === "true";
-
-    // Validar los queries Strings
-    const minPrice = parsePriceToCents(minPriceQuery)
-      ? minPriceQuery
-      : -Infinity;
-    const maxPrice = parsePriceToCents(maxPriceQuery)
-      ? maxPriceQuery
-      : Infinity;
+    const { minPrice: minPriceQuery, maxPrice: maxPriceQuery } = req.query;
 
     const data = await readData();
     const { categories, products } = data;
 
-    // Obtenemos el id de la category que el usuario clickeo
+    // Obtenemos la categoría que el usuario clickeo
     const categoryFind = categories.find(
       (category) =>
         category.slug.toLowerCase() === categorySlug.toLowerCase(),
@@ -96,30 +77,48 @@ app.get("/category/:slug", async (req, res) => {
       });
     }
 
-    const validations = validationsPrices(minPriceQuery, maxPriceQuery);
-    if (error && validations.title) {
-      return res.render("404", {
-        namePage: "Error categoría",
-        title: validations.title,
-        message: validations.message,
-        path: req.path,
-      });
-    }
-
-    // Obtenemos todos los productos que tengan la categoria encontrada
-    const productsFilter = products.filter(
-      (product) =>
-        product.categoryId === categoryFind.id &&
-        product.price / 100 >= minPrice &&
-        product.price / 100 <= maxPrice,
+    // Productos de esta categoría (sin filtrar)
+    const categoryProducts = products.filter(
+      (product) => product.categoryId === categoryFind.id,
     );
+
+    // Validar los filtros de precio
+    let filterError = "";
+    let filteredProducts = categoryProducts;
+
+    const hasMinPrice = minPriceQuery !== undefined && minPriceQuery !== "";
+    const hasMaxPrice = maxPriceQuery !== undefined && maxPriceQuery !== "";
+
+    if (hasMinPrice || hasMaxPrice) {
+      const minVal = parseFloat(minPriceQuery);
+      const maxVal = parseFloat(maxPriceQuery);
+
+      if (hasMinPrice && (isNaN(minVal) || minVal < 0)) {
+        filterError = `El precio mínimo "${minPriceQuery}" no es válido.`;
+      } else if (hasMaxPrice && (isNaN(maxVal) || maxVal < 0)) {
+        filterError = `El precio máximo "${maxPriceQuery}" no es válido.`;
+      } else if (hasMinPrice && hasMaxPrice && minVal > maxVal) {
+        filterError = "El precio mínimo no puede ser mayor al precio máximo.";
+      }
+
+      // Solo filtrar si no hay errores
+      if (!filterError) {
+        const min = hasMinPrice ? minVal : -Infinity;
+        const max = hasMaxPrice ? maxVal : Infinity;
+        filteredProducts = categoryProducts.filter(
+          (product) => product.price / 100 >= min && product.price / 100 <= max,
+        );
+      }
+      // Si hay error, filteredProducts ya tiene todos los productos de la categoría
+    }
 
     res.render("category", {
       namePage: categoryFind.name,
       category: categoryFind,
-      products: productsFilter,
+      products: filteredProducts,
       minPrice: minPriceQuery || "",
       maxPrice: maxPriceQuery || "",
+      filterError,
     });
   } catch (err) {
     console.error("Error en /category/:slug:", err);

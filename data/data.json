@@ -354,10 +354,6 @@
       "id": 1,
       "items": [
         {
-          "productId": 3,
-          "quantity": 2
-        },
-        {
           "productId": 15,
           "quantity": 2
         },
@@ -368,6 +364,10 @@
         {
           "productId": 20,
           "quantity": 1
+        },
+        {
+          "productId": 1,
+          "quantity": 2
         }
       ]
     }

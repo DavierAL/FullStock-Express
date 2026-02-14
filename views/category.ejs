@@ -31,9 +31,15 @@
         </fieldset>
 
         <button type="submit" class="button button--xl button--secondary price-filter__button">
-          Filtar Productos
+          Filtrar Productos
         </button>
+        <% if (locals.filterError) { %>
+          <p class="price-filter__error">
+            <%= filterError %>
+          </p>
+          <% } %>
       </form>
+
       <% if(products.length===0) { %>
         <div class="products__no-stock">
           <h3 class="products__no-stock-title">No hay productos para esta categoría.</h3>
