@@ -313,12 +313,151 @@ app.post("/cart/delete-item", async (req, res) => {
   }
 });
 
-app.get("/checkout", (req, res) => {
-  res.render("checkout");
+// Página de checkout - muestra resumen del carrito + formulario
+app.get("/checkout", async (req, res) => {
+  try {
+    const data = await readData();
+    const { carts, products } = data;
+    const cart = carts[0] || { id: 1, items: [] };
+
+    // Si el carrito está vacío, redirigir al carrito
+    if (cart.items.length === 0) {
+      return res.redirect("/cart");
+    }
+
+    // Enriquecer items del carrito con datos del producto
+    const cartItems = cart.items
+      .map((item) => {
+        const product = products.find((p) => p.id === item.productId);
+        if (!product) return null;
+        return {
+          ...item,
+          name: product.name,
+          imgSrc: product.imgSrc,
+          price: product.price,
+          subtotal: product.price * item.quantity,
+        };
+      })
+      .filter(Boolean);
+
+    const total = cartItems.reduce((sum, item) => sum + item.subtotal, 0);
+
+    res.render("checkout", {
+      namePage: "Checkout",
+      cartItems,
+      total,
+    });
+  } catch (err) {
+    console.error("Error en GET /checkout:", err);
+    res.status(500).render("404", {
+      namePage: "Error",
+      title: "Error del servidor",
+      message: "Ocurrió un error inesperado.",
+      path: "/cart",
+    });
+  }
 });
 
-app.get("/order-confirmation", (req, res) => {
-  res.render("order-confirmation");
+// Procesar la orden - crear orden, vaciar carrito
+app.post("/checkout", async (req, res) => {
+  try {
+    const data = await readData();
+    const { carts, products, orders } = data;
+    const cart = carts[0] || { id: 1, items: [] };
+
+    if (cart.items.length === 0) {
+      return res.redirect("/cart");
+    }
+
+    // Crear items de la orden con precios actuales
+    const orderItems = cart.items
+      .map((item) => {
+        const product = products.find((p) => p.id === item.productId);
+        if (!product) return null;
+        return {
+          productId: item.productId,
+          name: product.name,
+          price: product.price,
+          quantity: item.quantity,
+        };
+      })
+      .filter(Boolean);
+
+    const total = orderItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+
+    // Generar ID auto-incremental
+    const newOrderId =
+      orders.length > 0 ? Math.max(...orders.map((o) => o.id)) + 1 : 1;
+
+    // Crear la orden
+    const newOrder = {
+      id: newOrderId,
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address: req.body.address,
+      city: req.body.city,
+      country: req.body.country,
+      region: req.body.region,
+      zipCode: req.body.zipCode,
+      phone: req.body.phone,
+      items: orderItems,
+      total,
+      createdAt: new Date().toISOString(),
+    };
+
+    data.orders.push(newOrder);
+
+    // Vaciar el carrito
+    cart.items = [];
+    data.carts[0] = cart;
+
+    await writeData(data);
+
+    res.redirect(`/order-confirmation/${newOrderId}`);
+  } catch (err) {
+    console.error("Error en POST /checkout:", err);
+    res.status(500).render("404", {
+      namePage: "Error",
+      title: "Error al procesar la orden",
+      message: "Ocurrió un error al procesar tu orden. Intenta de nuevo.",
+      path: "/checkout",
+    });
+  }
+});
+
+// Página de confirmación de orden
+app.get("/order-confirmation/:orderId", async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const data = await readData();
+    const order = data.orders.find((o) => o.id === parseInt(orderId));
+
+    if (!order) {
+      return res.status(404).render("404", {
+        namePage: "Orden no encontrada",
+        title: "Orden no encontrada",
+        message: "No se encontró la orden solicitada.",
+        path: "/",
+      });
+    }
+
+    res.render("order-confirmation", {
+      namePage: "Confirmación",
+      orderId: order.id,
+    });
+  } catch (err) {
+    console.error("Error en /order-confirmation:", err);
+    res.status(500).render("404", {
+      namePage: "Error",
+      title: "Error del servidor",
+      message: "Ocurrió un error inesperado.",
+      path: "/",
+    });
+  }
 });
 
 app.get("/about", (req, res) => {

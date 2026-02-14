@@ -352,25 +352,49 @@
   "carts": [
     {
       "id": 1,
+      "items": []
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "email": "davierlopez18dl@gmail.com",
+      "firstName": "Davier Alejandro",
+      "lastName": "Lopez",
+      "address": "Av. Reducto 1155",
+      "city": "Miraflores",
+      "country": "PE",
+      "region": "Lima",
+      "zipCode": "07031",
+      "phone": "+51910361548",
       "items": [
         {
           "productId": 15,
+          "name": "Sticker VS Code",
+          "price": 249,
           "quantity": 2
         },
         {
           "productId": 13,
+          "name": "Sticker Docker",
+          "price": 299,
           "quantity": 1
         },
         {
           "productId": 20,
+          "name": "Taza Git",
+          "price": 1299,
           "quantity": 1
         },
         {
           "productId": 1,
+          "name": "Polo React",
+          "price": 2000,
           "quantity": 2
         }
-      ]
+      ],
+      "total": 6096,
+      "createdAt": "2026-02-14T04:33:54.387Z"
     }
-  ],
-  "orders": []
+  ]
 }

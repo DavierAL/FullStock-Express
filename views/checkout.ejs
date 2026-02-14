@@ -4,65 +4,38 @@
       <div class="checkout__summary">
         <h2 class="checkout__summary_title">Resumen de la orden</h2>
         <div class="checkout__summary_container">
-          <div class="checkout__item">
-            <div class="checkout__item-image">
-              <img
-                src="/images/polos/polo-react.png"
-                alt="Polo React"
-                class="checkout__item-image-content"
-              />
-            </div>
-            <div class="checkout__item-details">
-              <h3 class="checkout__item-title">Polo React</h3>
-              <div class="checkout__item-price">
-                <p>2</p>
-                <img
-                  src="/images/icons/x.svg"
-                  alt=""
-                  class="checkout__item-price-icon"
-                />
-                <p>S/ 20</p>
+          <% for (const item of cartItems) { %>
+            <div class="checkout__item">
+              <div class="checkout__item-image">
+                <img src="<%= item.imgSrc %>" alt="<%= item.name %>" class="checkout__item-image-content" />
+              </div>
+              <div class="checkout__item-details">
+                <h3 class="checkout__item-title">
+                  <%= item.name %>
+                </h3>
+                <div class="checkout__item-price">
+                  <p>
+                    <%= item.quantity %>
+                  </p>
+                  <img src="/images/icons/x.svg" alt="" class="checkout__item-price-icon" />
+                  <p>S/ <%= (item.price / 100).toFixed(2) %>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="checkout__item">
-            <div class="checkout__item-image">
-              <img
-                src="/images/tazas/taza-github.png"
-                alt="Taza GitHub"
-                class="checkout__item-image-content"
-              />
-            </div>
-            <div class="checkout__item-details">
-              <h3 class="checkout__item-title">Taza GitHub</h3>
-              <div class="checkout__item-price">
-                <p>1</p>
-                <img
-                  src="/images/icons/x.svg"
-                  alt=""
-                  class="checkout__item-price-icon"
-                />
-                <p>S/ 14.99</p>
+            <% } %>
+              <div class="checkout__total">
+                <p>Total</p>
+                <p>S/ <%= (total / 100).toFixed(2) %>
+                </p>
               </div>
-            </div>
-          </div>
-          <div class="checkout__total">
-            <p>Total</p>
-            <p>S/ 54.99</p>
-          </div>
         </div>
       </div>
-      <form class="checkout__form" action="/order-confirmation">
+      <form class="checkout__form" method="post" action="/checkout">
         <legend class="checkout__legend">Información de contacto</legend>
         <div class="input-field">
           <label for="email">Correo electrónico</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-          />
+          <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
         <div class="separator checkout__separator"></div>
         <fieldset>
@@ -70,21 +43,11 @@
           <div class="checkout__form-fields">
             <div class="input-field">
               <label for="firstName">Nombre</label>
-              <input
-                id="firstName"
-                name="firstName"
-                autocomplete="given-name"
-                required
-              />
+              <input id="firstName" name="firstName" autocomplete="given-name" required />
             </div>
             <div class="input-field">
               <label for="lastName">Apellido</label>
-              <input
-                id="lastName"
-                name="lastName"
-                autocomplete="family-name"
-                required
-              />
+              <input id="lastName" name="lastName" autocomplete="family-name" required />
             </div>
             <div class="input-field">
               <label for="company">Compañia</label>
@@ -92,30 +55,15 @@
             </div>
             <div class="input-field">
               <label for="address">Dirección</label>
-              <input
-                id="address"
-                name="address"
-                autocomplete="street-address"
-                required
-              />
+              <input id="address" name="address" autocomplete="street-address" required />
             </div>
             <div class="input-field">
               <label for="city">Ciudad</label>
-              <input
-                id="city"
-                name="city"
-                autocomplete="address-level2"
-                required
-              />
+              <input id="city" name="city" autocomplete="address-level2" required />
             </div>
             <div class="select-field">
               <label for="country">País</label>
-              <select
-                id="country"
-                name="country"
-                autocomplete="country"
-                required
-              >
+              <select id="country" name="country" autocomplete="country" required>
                 <option value="">Seleccionar país</option>
                 <option value="AR">Argentina</option>
                 <option value="BO">Bolivia</option>
@@ -140,21 +88,11 @@
             </div>
             <div class="input-field">
               <label for="region">Provincia/Estado</label>
-              <input
-                id="region"
-                name="region"
-                autocomplete="address-level1"
-                required
-              />
+              <input id="region" name="region" autocomplete="address-level1" required />
             </div>
             <div class="input-field">
               <label for="zipCode">Código Postal</label>
-              <input
-                id="zipCode"
-                name="zipCode"
-                autocomplete="postal-code"
-                required
-              />
+              <input id="zipCode" name="zipCode" autocomplete="postal-code" required />
             </div>
             <div class="input-field">
               <label for="phone">Teléfono</label>
