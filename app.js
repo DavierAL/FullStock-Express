@@ -1,6 +1,8 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import { readData, writeData } from "./utils/utils.js";
+import AppError from "./utils/errorUtils.js";
+import errorHandler, { notFoundHandler } from "./middlewares/errorHandler.js";
 
 // Puerto de escucha de peticiones
 const PORT = process.env.PORT || 3000;
@@ -69,12 +71,7 @@ app.get("/category/:slug", async (req, res) => {
     );
 
     if (!categoryFind) {
-      return res.status(404).render("404", {
-        namePage: "Error categoría",
-        title: "Página no encontrada",
-        message: "Categoria no encontrada",
-        path: "/",
-      });
+      throw new AppError("Error categoría", "La categoria que estas buscando no se encuentra disponible", 404);
     }
 
     // Productos de esta categoría (sin filtrar)
@@ -121,13 +118,7 @@ app.get("/category/:slug", async (req, res) => {
       filterError,
     });
   } catch (err) {
-    console.error("Error en /category/:slug:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "Ocurrió un error inesperado. Intenta de nuevo.",
-      path: "/",
-    });
+    throw new AppError("Error categoría", "Categoria no encontrada new", 404);
   }
 });
 
@@ -143,12 +134,7 @@ app.get("/product/:id", async (req, res) => {
     );
 
     if (!foundProduct) {
-      return res.status(404).render("404", {
-        namePage: "Error",
-        title: "Página no encontrada",
-        message: "Producto no encontrado",
-        path: "/",
-      });
+      throw new AppError("Error producto", "El producto que estas buscando no se encuentra disponible", 404);
     }
 
     res.render("product", {
@@ -157,12 +143,7 @@ app.get("/product/:id", async (req, res) => {
     });
   } catch (err) {
     console.error("Error en /product/:id:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "Ocurrió un error inesperado. Intenta de nuevo.",
-      path: "/",
-    });
+    throw new AppError("Error producto", "Ocurrió un error inesperado. Intenta de nuevo.", 500);
   }
 });
 
@@ -178,12 +159,7 @@ app.post("/cart/add-product", async (req, res) => {
     );
 
     if (!foundProduct) {
-      return res.status(404).render("404", {
-        namePage: "Error",
-        title: "Producto no encontrado",
-        message: "El producto seleccionado no se encuentra disponible",
-        path: pathProduct,
-      });
+      throw new AppError("Error producto", "El producto que estas buscando no se encuentra disponible", 404);
     }
 
     const cart = carts[0] || { id: 1, items: [] };
@@ -208,12 +184,7 @@ app.post("/cart/add-product", async (req, res) => {
     res.redirect(`/product/${productId}`);
   } catch (err) {
     console.error("Error en /cart/add-product:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "No se pudo agregar el producto al carrito.",
-      path: "/",
-    });
+    throw new AppError("Error carrito", "No se pudo agregar el producto al carrito.", 500);
   }
 });
 
@@ -254,12 +225,7 @@ app.get("/cart", async (req, res) => {
     });
   } catch (err) {
     console.error("Error en /cart:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "No se pudo cargar el carrito.",
-      path: "/",
-    });
+    throw new AppError("Error carrito", "No se pudo cargar el carrito.", 500);
   }
 });
 
@@ -283,7 +249,7 @@ app.post("/cart/update-item", async (req, res) => {
     res.redirect("/cart");
   } catch (err) {
     console.error("Error en /cart/update-item:", err);
-    res.redirect("/cart");
+    throw new AppError("Error carrito", "No se pudo actualizar el producto en el carrito.", 500);
   }
 });
 
@@ -309,7 +275,7 @@ app.post("/cart/delete-item", async (req, res) => {
     res.redirect("/cart");
   } catch (err) {
     console.error("Error en /cart/delete-item:", err);
-    res.redirect("/cart");
+    throw new AppError("Error carrito", "No se pudo eliminar el producto del carrito.", 500);
   }
 });
 
@@ -349,12 +315,7 @@ app.get("/checkout", async (req, res) => {
     });
   } catch (err) {
     console.error("Error en GET /checkout:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "Ocurrió un error inesperado.",
-      path: "/cart",
-    });
+    throw new AppError("Error checkout", "Ocurrió un error inesperado.", 500);
   }
 });
 
@@ -420,12 +381,7 @@ app.post("/checkout", async (req, res) => {
     res.redirect(`/order-confirmation/${newOrderId}`);
   } catch (err) {
     console.error("Error en POST /checkout:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error al procesar la orden",
-      message: "Ocurrió un error al procesar tu orden. Intenta de nuevo.",
-      path: "/checkout",
-    });
+    throw new AppError("Error checkout", "Ocurrió un error al procesar tu orden. Intenta de nuevo.", 500);
   }
 });
 
@@ -437,12 +393,7 @@ app.get("/order-confirmation/:orderId", async (req, res) => {
     const order = data.orders.find((o) => o.id === parseInt(orderId));
 
     if (!order) {
-      return res.status(404).render("404", {
-        namePage: "Orden no encontrada",
-        title: "Orden no encontrada",
-        message: "No se encontró la orden solicitada.",
-        path: "/",
-      });
+      throw new AppError("Error orden", "No se encontró la orden solicitada.", 404);
     }
 
     res.render("order-confirmation", {
@@ -451,36 +402,27 @@ app.get("/order-confirmation/:orderId", async (req, res) => {
     });
   } catch (err) {
     console.error("Error en /order-confirmation:", err);
-    res.status(500).render("404", {
-      namePage: "Error",
-      title: "Error del servidor",
-      message: "Ocurrió un error inesperado.",
-      path: "/",
-    });
+    throw new AppError("Error confirmación", "Ocurrió un error inesperado.", 500);
   }
 });
 
-app.get("/about", (req, res) => {
+app.get("/about", (_req, res) => {
   res.render("about");
 });
 
-app.get("/terms", (req, res) => {
+app.get("/terms", (_req, res) => {
   res.render("terms");
 });
 
-app.get("/privacy", (req, res) => {
+app.get("/privacy", (_req, res) => {
   res.render("privacy");
 });
 
-// Middleware 404 - Captura rutas no definidas
-app.use((req, res) => {
-  res.status(404).render("404", {
-    namePage: "Error 404",
-    title: "Página no encontrada",
-    message: "La página que buscas no existe.",
-    path: "/",
-  });
-});
+// Handler para manejar rutas no definidas
+app.use(notFoundHandler);
+
+// Handler para manejar errores
+app.use(errorHandler);
 
 // Escuchamos peticiones del cliente.
 app.listen(PORT, () => {
