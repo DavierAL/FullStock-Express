@@ -1,8 +1,10 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
-import { readData, writeData } from "./utils/utils.js";
 import AppError from "./utils/errorUtils.js";
 import errorHandler, { notFoundHandler } from "./middlewares/errorHandler.js";
+import { getData, saveData } from "./data/db.js";
+import * as pageController from "./controllers/pageController.js";
+import * as productController from "./controllers/productController.js";
 
 // Puerto de escucha de peticiones
 const PORT = process.env.PORT || 3000;
@@ -40,7 +42,7 @@ app.use(async (req, res, next) => {
   res.locals.namePage = pageTitleByPath[currentPath] || "Full Stock";
 
   try {
-    const data = await readData();
+    const data = await getData();
     res.locals.countCartProducts = data.carts[0]
       ? data.carts[0].items.reduce((total, item) => total + item.quantity, 0)
       : 0;
@@ -51,17 +53,42 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Rutas
-app.get("/", (req, res) => {
-  res.render("index");
+// Rutas estaticas
+app.get("/", pageController.renderHome);
+
+app.get("/about", pageController.renderAbout);
+
+app.get("/terms", pageController.renderTerms);
+
+app.get("/privacy", pageController.renderPrivacy);
+
+//Rutas dinamicas
+
+app.get("/category/:slug", productController.renderProductsByCategory);
+
+app.get("/product/:id", productController.renderProduct);
+
+
+
+app.get("/cart", (req, res) => {
+  res.render("cart");
+});
+
+app.get("/checkout", (req, res) => {
+  res.render("checkout");
+});
+
+app.get("/order-confirmation", (req, res) => {
+  res.render("order-confirmation");
 });
 
 app.get("/category/:slug", async (req, res) => {
+
   try {
     const { slug: categorySlug } = req.params;
     const { minPrice: minPriceQuery, maxPrice: maxPriceQuery } = req.query;
 
-    const data = await readData();
+    const data = await getData();
     const { categories, products } = data;
 
     // Obtenemos la categoría que el usuario clickeo
@@ -125,7 +152,7 @@ app.get("/category/:slug", async (req, res) => {
 app.get("/product/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await readData();
+    const data = await getData();
     const { products } = data;
 
     // Buscamos el producto por su ID
@@ -150,7 +177,7 @@ app.get("/product/:id", async (req, res) => {
 app.post("/cart/add-product", async (req, res) => {
   try {
     const { productId, pathProduct } = req.body;
-    const data = await readData();
+    const data = await getData();
     const { products, carts } = data;
 
     // Buscamos el producto que el usuario agrego al carrito
@@ -179,7 +206,7 @@ app.post("/cart/add-product", async (req, res) => {
     data.carts[0] = cart;
 
     // Escribir en mi archivo data.json
-    await writeData(data);
+    await saveData(data);
 
     res.redirect(`/product/${productId}`);
   } catch (err) {
@@ -190,7 +217,7 @@ app.post("/cart/add-product", async (req, res) => {
 
 app.get("/cart", async (req, res) => {
   try {
-    const data = await readData();
+    const data = await getData();
     const { products, carts } = data;
     const cart = carts[0] || { id: 1, items: [] };
 
@@ -232,7 +259,7 @@ app.get("/cart", async (req, res) => {
 app.post("/cart/update-item", async (req, res) => {
   try {
     const { productId, quantity } = req.body;
-    const data = await readData();
+    const data = await getData();
     const { carts } = data;
     const cart = carts[0] || { id: 1, items: [] };
 
@@ -244,7 +271,7 @@ app.post("/cart/update-item", async (req, res) => {
     }
     data.carts[0] = cart;
 
-    await writeData(data);
+    await saveData(data);
 
     res.redirect("/cart");
   } catch (err) {
@@ -257,7 +284,7 @@ app.post("/cart/update-item", async (req, res) => {
 app.post("/cart/delete-item", async (req, res) => {
   try {
     const { productId } = req.body;
-    const data = await readData();
+    const data = await getData();
     const { carts } = data;
     const cart = carts[0] || { id: 1, items: [] };
 
@@ -270,7 +297,7 @@ app.post("/cart/delete-item", async (req, res) => {
     data.carts[0] = cart;
 
     // Escribir data en archivo data.json
-    await writeData(data);
+    await saveData(data);
 
     res.redirect("/cart");
   } catch (err) {
@@ -282,7 +309,7 @@ app.post("/cart/delete-item", async (req, res) => {
 // Página de checkout - muestra resumen del carrito + formulario
 app.get("/checkout", async (req, res) => {
   try {
-    const data = await readData();
+    const data = await getData();
     const { carts, products } = data;
     const cart = carts[0] || { id: 1, items: [] };
 
@@ -322,7 +349,7 @@ app.get("/checkout", async (req, res) => {
 // Procesar la orden - crear orden, vaciar carrito
 app.post("/checkout", async (req, res) => {
   try {
-    const data = await readData();
+    const data = await getData();
     const { carts, products, orders } = data;
     const cart = carts[0] || { id: 1, items: [] };
 
@@ -376,7 +403,7 @@ app.post("/checkout", async (req, res) => {
     cart.items = [];
     data.carts[0] = cart;
 
-    await writeData(data);
+    await saveData(data);
 
     res.redirect(`/order-confirmation/${newOrderId}`);
   } catch (err) {
@@ -389,7 +416,7 @@ app.post("/checkout", async (req, res) => {
 app.get("/order-confirmation/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
-    const data = await readData();
+    const data = await getData();
     const order = data.orders.find((o) => o.id === parseInt(orderId));
 
     if (!order) {
