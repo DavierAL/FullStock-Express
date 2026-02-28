@@ -7,18 +7,19 @@
           <% for (const item of cartItems) { %>
             <div class="checkout__item">
               <div class="checkout__item-image">
-                <img src="<%= item.imgSrc %>" alt="<%= item.name %>" class="checkout__item-image-content" />
+                <img src="<%= item.product.imgSrc %>" alt="<%= item.product.name %>"
+                  class="checkout__item-image-content" />
               </div>
               <div class="checkout__item-details">
                 <h3 class="checkout__item-title">
-                  <%= item.name %>
+                  <%= item.product.name %>
                 </h3>
                 <div class="checkout__item-price">
                   <p>
                     <%= item.quantity %>
                   </p>
                   <img src="/images/icons/x.svg" alt="" class="checkout__item-price-icon" />
-                  <p>S/ <%= (item.price / 100).toFixed(2) %>
+                  <p>S/ <%= (item.product.price / 100).toFixed(2) %>
                   </p>
                 </div>
               </div>
@@ -26,12 +27,12 @@
             <% } %>
               <div class="checkout__total">
                 <p>Total</p>
-                <p>S/ <%= (total / 100).toFixed(2) %>
+                <p>S/ <%= total.toFixed(2) %>
                 </p>
               </div>
         </div>
       </div>
-      <form class="checkout__form" method="post" action="/checkout">
+      <form class="checkout__form" action="/checkout/place-order" method="post">
         <legend class="checkout__legend">Información de contacto</legend>
         <div class="input-field">
           <label for="email">Correo electrónico</label>

@@ -12,6 +12,13 @@ export async function getData() {
 }
 
 export async function saveData(data) {
-    // Escribir en mi archivo data.json
-    await fs.writeFile(DATA_PATH, JSON.stringify(data));
+    await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2), "utf-8");
+}
+
+export async function getNextId(collectionName) {
+    const db = await getData();
+    const collection = db[collectionName] || [];
+    if (collection.length === 0) return 1;
+    const ids = collection.map((item) => item.id);
+    return Math.max(...ids) + 1;
 }

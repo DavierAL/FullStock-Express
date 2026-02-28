@@ -67,60 +67,9 @@ export async function deleteItemFromCart(productId) {
     return cart;
 }
 
-// Procesa el checkout: crea la orden, vacía el carrito y persiste todo
-export async function processCheckout(formData) {
-    const data = await cartRepository.getRawData();
-    const { products, orders } = data;
-    const cart = data.carts[0] || { id: 1, items: [] };
-
-    // Enriquecer items con precios actuales del catálogo
-    const orderItems = cart.items
-        .map((item) => {
-            const product = products.find((p) => p.id === parseInt(item.productId));
-            if (!product) return null;
-            return {
-                productId: parseInt(item.productId),
-                name: product.name,
-                price: product.price,
-                quantity: item.quantity,
-            };
-        })
-        .filter(Boolean);
-
-    const total = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-    // ID auto-incremental
-    const newOrderId = orders.length > 0 ? Math.max(...orders.map((o) => o.id)) + 1 : 1;
-
-    const newOrder = {
-        id: newOrderId,
-        email: formData.email,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        address: formData.address,
-        city: formData.city,
-        country: formData.country,
-        region: formData.region,
-        zipCode: formData.zipCode,
-        phone: formData.phone,
-        items: orderItems,
-        total,
-        createdAt: new Date().toISOString(),
-    };
-
-    data.orders.push(newOrder);
-
-    // Vaciar el carrito
+export async function clearCart() {
+    const cart = await cartRepository.find();
+    if (!cart) return;
     cart.items = [];
-    data.carts[0] = cart;
-
-    await cartRepository.saveRawData(data);
-
-    return newOrder;
-}
-
-// Busca una orden por ID
-export async function getOrderById(orderId) {
-    const data = await cartRepository.getRawData();
-    return data.orders.find((o) => o.id === orderId) || null;
+    await cartRepository.update(cart);
 }

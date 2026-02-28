@@ -30,39 +30,4 @@ export async function deleteItemFromCart(req, res) {
     res.redirect("/cart");
 }
 
-// GET /checkout — muestra el resumen del carrito + formulario de compra
-export async function renderCheckout(req, res) {
-    const cart = await cartService.getCart();
 
-    // Si el carrito está vacío, redirigir al carrito
-    if (cart.items.length === 0) {
-        return res.redirect("/cart");
-    }
-
-    res.render("checkout", {
-        namePage: "Checkout",
-        cartItems: cart.items,
-        total: cart.total,
-    });
-}
-
-// POST /checkout — procesa la orden y vacía el carrito
-export async function processCheckout(req, res) {
-    const order = await cartService.processCheckout(req.body);
-    res.redirect(`/order-confirmation/${order.id}`);
-}
-
-// GET /order-confirmation/:orderId — muestra confirmación de la orden
-export async function renderOrderConfirmation(req, res) {
-    const orderId = parseInt(req.params.orderId);
-    const order = await cartService.getOrderById(orderId);
-
-    if (!order) {
-        return res.redirect("/");
-    }
-
-    res.render("order-confirmation", {
-        namePage: "Confirmación",
-        orderId: order.id,
-    });
-}

@@ -1,20 +1,21 @@
 <section class="product">
   <div class="container product__container">
     <div class="product__image">
-      <img
-        src="<%= product.imgSrc %>"
-        alt="<%= product.name %>"
-        class="product__image_content"
-      />
+      <img src="<%= product.imgSrc %>" alt="<%= product.name %>" class="product__image_content" />
     </div>
     <div class="product__info">
-      <h1 class="product__title"><%= product.name %></h1>
-      <p class="product__price">S/ <%= (product.price / 100).toFixed(2) %></p>
-      <p class="product__description"><%= product.description %></p>
-      <form method="post" action="/cart/add-product">
+      <h1 class="product__title">
+        <%= product.name %>
+      </h1>
+      <p class="product__price">S/ <%= (product.price / 100).toFixed(2) %>
+      </p>
+      <p class="product__description">
+        <%= product.description %>
+      </p>
+      <form method="post" action="/cart/add-item">
         <input type="hidden" name="productId" value="<%= product.id %>">
-        <input type="hidden" name="pathProduct" value="/product/<%= product.id%>" >
-        <button class="button button--xl product__button" type="submit" >
+        <input type="hidden" name="pathProduct" value="/product/<%= product.id%>">
+        <button class="button button--xl product__button" type="submit">
           Agregar al Carrito
         </button>
       </form>
@@ -26,7 +27,7 @@
             <li id="feat-<%= index %>">
               <%= feature %>
             </li>
-          <% }) %>
+            <% }) %>
         </ul>
       </div>
     </div>
