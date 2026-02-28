@@ -3,8 +3,9 @@ import * as orderService from "../services/orderService.js";
 import AppError from "../utils/errorUtils.js";
 
 // GET /checkout — muestra el resumen del carrito + formulario de compra
-export async function renderCheckout(_req, res) {
-    const cart = await cartService.getCart();
+export async function renderCheckout(req, res) {
+    const cartId = req.cartId;
+    const cart = await cartService.getCart(cartId);
     const { items: cartItems, total } = cart || { items: [], total: 0 };
 
     res.render("checkout", {
@@ -15,8 +16,9 @@ export async function renderCheckout(_req, res) {
 
 // POST /checkout/place-order — procesa el formulario y crea la orden
 export async function placeOrder(req, res) {
+    const cartId = req.cartId;
     const shippingInfo = req.body;
-    const newOrder = await orderService.processCheckout(shippingInfo);
+    const newOrder = await orderService.processCheckout(cartId, shippingInfo);
     res.redirect(`/order-confirmation?orderId=${newOrder.id}`);
 }
 

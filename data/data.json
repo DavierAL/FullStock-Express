@@ -353,6 +353,16 @@
     {
       "id": 1,
       "items": []
+    },
+    {
+      "id": 2,
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        }
+      ],
+      "total": 0
     }
   ],
   "orders": [

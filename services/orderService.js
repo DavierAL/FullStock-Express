@@ -2,8 +2,8 @@ import * as orderRepository from "../repositories/orderRepository.js";
 import * as cartService from "./cartService.js";
 import AppError from "../utils/errorUtils.js";
 
-export async function processCheckout(shippingInfo) {
-    const cart = await cartService.getCart();
+export async function processCheckout(cartId, shippingInfo) {
+    const cart = await cartService.getCart(cartId);
 
     if (!cart || cart.items.length === 0) {
         throw new AppError("El carrito está vacío. Agrega productos antes de continuar.", 400);
@@ -26,7 +26,7 @@ export async function processCheckout(shippingInfo) {
 
     const newOrder = await orderRepository.create(order);
 
-    await cartService.clearCart();
+    await cartService.clearCart(cartId);
 
     return newOrder;
 }

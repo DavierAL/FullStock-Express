@@ -1,8 +1,8 @@
 import * as cartRepository from "../repositories/cartRepository.js";
 import * as productRepository from "../repositories/productRepository.js";
 
-export async function getCart() {
-    const cart = (await cartRepository.find()) || { id: 1, items: [] };
+export async function getCart(cartId) {
+    const cart = (await cartRepository.find(cartId)) || { id: 1, items: [] };
     const products = await productRepository.findAll();
     // Modificar los items del carrito de compras
     const cartItemsDetailed = cart.items.map((item) => {
@@ -26,9 +26,19 @@ export async function getCart() {
     };
 }
 
-export async function addItemToCart(productId) {
+export async function addItemToCart(cartId, productId) {
     productId = parseInt(productId);
-    const cart = (await cartRepository.find()) || { id: 1, items: [] };
+    const cart = (await cartRepository.find(cartId));
+
+    if (!cart) {
+        const newCart = await cartRepository.create();
+
+        newCart.items.push({ productId, quantity: 1 });
+
+        const updatedCart = await cartRepository.update(newCart);
+
+        return updatedCart;
+    }
 
     //Buscamos el producto que el usuario agrego
     const cartItem = cart.items.find((item) => item.productId === productId);
@@ -39,15 +49,14 @@ export async function addItemToCart(productId) {
         cart.items.push({ productId, quantity: 1 });
     }
 
-    await cartRepository.update(cart);
-
-    return cart;
+    const updatedCart = await cartRepository.update(cart);
+    return updatedCart;
 }
 
-export async function updateCartItem(productId, quantity) {
+export async function updateCartItem(cartId, productId, quantity) {
     productId = parseInt(productId);
     quantity = parseInt(quantity);
-    const cart = (await cartRepository.find()) || { id: 1, items: [] };
+    const cart = (await cartRepository.find(cartId));
     const cartItem = cart.items.find((item) => item.productId === productId);
     if (cartItem) {
         cartItem.quantity = quantity;
@@ -56,9 +65,9 @@ export async function updateCartItem(productId, quantity) {
     return cart;
 }
 
-export async function deleteItemFromCart(productId) {
+export async function deleteItemFromCart(cartId, productId) {
     productId = parseInt(productId);
-    const cart = (await cartRepository.find()) || { id: 1, items: [] };
+    const cart = (await cartRepository.find(cartId));
     const cartItem = cart.items.find((item) => item.productId === productId);
     if (cartItem) {
         cart.items = cart.items.filter((item) => item.productId !== productId);
@@ -67,8 +76,8 @@ export async function deleteItemFromCart(productId) {
     return cart;
 }
 
-export async function clearCart() {
-    const cart = await cartRepository.find();
+export async function clearCart(cartId) {
+    const cart = await cartRepository.find(cartId);
     if (!cart) return;
     cart.items = [];
     await cartRepository.update(cart);

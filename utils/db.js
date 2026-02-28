@@ -6,5 +6,9 @@ export async function getNextId(collectionName) {
 
     if (collection.lenght === 0) return 1;
 
+    const ids = collection.map(item => item.id);
+    const maxId = Math.max(...ids);
+    return maxId + 1;
+
 
 }
