@@ -1,4 +1,5 @@
 import * as cartService from "../services/cartService.js";
+import * as cookiesUtils from "../utils/cookiesUtils.js";
 
 // GET /cart — muestra el carrito
 export async function renderCart(req, res) {
@@ -19,10 +20,7 @@ export async function addItemToCart(req, res) {
     const cart = await cartService.addItemToCart(cartId, productId);
 
     if (!cartId) {
-        res.cookie("cartId", cart.id, {
-            maxAge: 60 * 60 * 24 * 30,
-            httpOnly: true,
-        });
+        cookiesUtils.setCookie(res, "cartId", cart.id);
     }
     res.redirect("/cart");
 }

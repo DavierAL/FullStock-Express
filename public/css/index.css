@@ -16,6 +16,9 @@
 @import "3_components/button.css" layer(components);
 @import "3_components/separator.css" layer(components);
 @import "3_components/input-field.css" layer(components);
+@import "3_components/auth-nav.css" layer(components);
+@import "3_components/signup.css" layer(components);
+@import "3_components/login.css" layer(components);
 
 /* Routes */
 @import "3_components/not-found.css" layer(components);

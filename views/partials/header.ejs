@@ -1,24 +1,34 @@
 <header class="root__header">
+
+  <div class="auth-nav">
+    <div class="container auth-nav__container">
+      <nav aria-label="Autenticación de usuario">
+        <ul class="auth-nav__list">
+          <li class="auth-nav__item">
+            <a href="/login" class="auth-nav__link">Iniciar sesión </a>
+          </li>
+          <li class="auth-nav__item">
+            <a href="/signup" class="auth-nav__link">Crear una cuenta </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="container header-main">
+    <!-- Aquí va el resto del header -->
+  </div>
   <div class="container header-main">
     <div class="header-main__top">
       <a href="/">
-        <img
-          src="/images/fullstock-logo.svg"
-          alt="FullStock inicio"
-          width="128"
-          height="32"
-        />
+        <img src="/images/fullstock-logo.svg" alt="FullStock inicio" width="128" height="32" />
       </a>
       <div class="header-actions">
-        <a
-          href="/cart"
-          class="button button--ghost button--xl-icon header-actions__cart"
-          aria-label="Carrito de compras"
-        >
+        <a href="/cart" class="button button--ghost button--xl-icon header-actions__cart"
+          aria-label="Carrito de compras">
           <img src="/images/icons/cart.svg" alt="Carrito de compras" />
-          <span class="header-actions__cart-badge"
-            ><%= countCartProducts %></span
-          >
+          <span class="header-actions__cart-badge">
+            <%= countCartProducts %>
+          </span>
         </a>
       </div>
     </div>
@@ -26,19 +36,13 @@
     <nav aria-label="Navegación principal" class="main-nav">
       <ul class="main-nav__list" role="menubar">
         <li class="main-nav__item" role="none">
-          <a href="/category/polos" role="menuitem" class="main-nav__link"
-            >Polos</a
-          >
+          <a href="/category/polos" role="menuitem" class="main-nav__link">Polos</a>
         </li>
         <li class="main-nav__item" role="none">
-          <a href="/category/tazas" role="menuitem" class="main-nav__link"
-            >Tazas</a
-          >
+          <a href="/category/tazas" role="menuitem" class="main-nav__link">Tazas</a>
         </li>
         <li class="main-nav__item" role="none">
-          <a href="/category/stickers" role="menuitem" class="main-nav__link"
-            >Stickers</a
-          >
+          <a href="/category/stickers" role="menuitem" class="main-nav__link">Stickers</a>
         </li>
       </ul>
     </nav>

@@ -433,5 +433,14 @@
       "status": "pending",
       "createdAt": "2026-02-27T04:52:20.375Z"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "davierlopez18dl@gmail.com",
+      "password": "$2b$10$yPgkcPmOkUy3TDj3s9bq4u54Scp2MzpTWgFSAS07DrERQ0Mt2p7a.",
+      "createdAt": "2026-03-03T01:16:58.690Z",
+      "updatedAt": "2026-03-03T01:16:58.692Z"
+    }
   ]
 }

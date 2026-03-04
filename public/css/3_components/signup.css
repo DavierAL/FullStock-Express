@@ -1,0 +1,31 @@
+.signup {
+    max-width: 24rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signup__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.signup__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.signup__error {
+    color: hsl(0 84% 60%);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.signup__footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+}
