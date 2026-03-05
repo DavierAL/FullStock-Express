@@ -1,16 +1,20 @@
 import * as userService from "../services/userService.js";
-import { clearCookie } from "../utils/cookie.js";
+import { clearCookie } from "../utils/cookiesUtils.js";
 
 export async function authContext(req, res, next) {
     req.user = null;
     res.locals.user = null;
 
     const userId = req.cookies.userId;
-    if (!userId) return next();
+    if (!userId) {
+        clearCookie(res, "userId");
+
+        return next();
+    }
 
     const user = await userService.getUserById(userId);
     if (!user) {
-        clearCookie("userId");
+        clearCookie(res, "userId");
         return next();
     }
 

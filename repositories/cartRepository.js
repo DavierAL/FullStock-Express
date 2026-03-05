@@ -1,6 +1,7 @@
 import { getData, saveData } from "../data/db.js"
 import { getNextId } from "../utils/db.js"
 
+//Buscar un carrito de invitado por su id
 export async function find(id) {
     const data = await getData();
 
@@ -10,13 +11,25 @@ export async function find(id) {
     return data.carts.find(cart => cart.id === id) || null;
 }
 
-export async function create() {
+//Exportar la funcion find
+export async function findByUserId(userId) {
+    const data = await getData();
+
+    if (!data.carts) {
+        data.carts = []
+    }
+
+    return data.carts.find(cart => cart.userId === userId) || null;
+}
+
+export async function create(userId = null) {
     const data = await getData();
 
     const nextId = await getNextId("carts");
 
     const newCart = {
         id: nextId,
+        userId,
         items: [],
         total: 0,
     }

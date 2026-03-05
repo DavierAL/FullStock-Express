@@ -23,9 +23,9 @@
             <a href="/login" class="signup__footer_link"> Inicia sesión </a>
         </div>
     </div>
-    <% if (error) { %>
+    <% if (locals.error) { %>
         <p class="error">
-            <%= error %>
+            <%= locals.error %>
         </p>
         <% } %>
 </section>

@@ -4,12 +4,23 @@
     <div class="container auth-nav__container">
       <nav aria-label="Autenticación de usuario">
         <ul class="auth-nav__list">
-          <li class="auth-nav__item">
-            <a href="/login" class="auth-nav__link">Iniciar sesión </a>
-          </li>
-          <li class="auth-nav__item">
-            <a href="/signup" class="auth-nav__link">Crear una cuenta </a>
-          </li>
+          <% if (locals.user) { %>
+            <li class="auth-nav__item">
+              <span class="auth-nav__link" style="color: var(--muted-foreground);">
+                <%= locals.user.email %>
+              </span>
+            </li>
+            <li class="auth-nav__item">
+              <a href="/logout" class="auth-nav__link">Cerrar sesión</a>
+            </li>
+            <% } else { %>
+              <li class="auth-nav__item">
+                <a href="/login" class="auth-nav__link">Iniciar sesión </a>
+              </li>
+              <li class="auth-nav__item">
+                <a href="/signup" class="auth-nav__link">Crear una cuenta </a>
+              </li>
+              <% } %>
         </ul>
       </nav>
     </div>

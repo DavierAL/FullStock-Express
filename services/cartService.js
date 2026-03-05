@@ -82,3 +82,19 @@ export async function clearCart(cartId) {
     cart.items = [];
     await cartRepository.update(cart);
 }
+
+export async function mergeCart(guestCartId, userCartId) {
+    if (!guestCartId) return
+
+    const guestCart = await cartRepository.find(guestCartId);
+
+    if (!guestCart || guestCart.items.length === 0) return
+
+    let userCart = await cartRepository.findByUserId(userCartId);
+
+    if (!userCart) {
+        userCart = await cartRepository.create(userCartId);
+    }
+
+
+}

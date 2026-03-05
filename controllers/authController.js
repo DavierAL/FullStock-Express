@@ -8,18 +8,19 @@ export async function renderSignup(req, res) {
 
 export async function handleSignup(req, res) {
     if (req.user) return res.redirect("/");
-    const { emailBody, password, confirmPassword } = req.body;
+    const { email, password, confirmPassword } = req.body;
 
-    const email = emailBody.trim().toLowerCase();
+    const normalizedEmail = email.trim().toLowerCase();
 
     try {
-        await authService.signup(email, password, confirmPassword);
+        const newUser = await authService.signup(normalizedEmail, password, confirmPassword);
+        cookiesUtils.setCookie(res, "userId", newUser.id);
         res.redirect("/");
     } catch (error) {
         console.log(error);
         res.render("signup", {
             error: error.message,
-            values: { email }
+            values: { email: normalizedEmail }
         });
     }
 }
@@ -31,18 +32,18 @@ export async function renderLogin(req, res) {
 
 export async function handleLogin(req, res) {
     if (req.user) return res.redirect("/");
-    const { emailBody, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        const user = await authService.login(emailBody, password);
+        const user = await authService.login(email, password);
 
-        cookiesUtils.setCookie(res, "userId", user._id);
+        cookiesUtils.setCookie(res, "userId", user.id);
         res.redirect("/");
     } catch (error) {
         console.log(error);
         res.render("login", {
             error: error.message,
-            values: { email: emailBody }
+            values: { email }
         });
     }
 }

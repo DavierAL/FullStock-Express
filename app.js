@@ -1,12 +1,12 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import errorHandler, { notFoundHandler } from "./middlewares/errorHandler.js";
-import { getData } from "./data/db.js";
 import cookieParser from "cookie-parser";
 import pageRouter from "./routes/pageRouter.js";
 import productRouter from "./routes/productRouter.js";
 import cartRouter from "./routes/cartRouter.js";
 import { cartContext } from "./middlewares/cartContext.js";
+import { authContext } from "./middlewares/authContext.js";
 import { globalHandler } from "./middlewares/globalHandler.js";
 import authRouter from "./routes/authRouter.js";
 
@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 
 //Middleware para manejar cookies
 app.use(cookieParser());
+
+//Middleware para manejar autenticación
+app.use(authContext);
 
 //Middleware para manejar el carrito
 app.use(cartContext);

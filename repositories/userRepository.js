@@ -2,7 +2,8 @@ import { getData, getNextId, saveData } from "../data/db.js";
 
 export async function findUserById(id) {
     const data = await getData();
-    const user = data.users.find((user) => user.id === id);
+    const parsedId = Number(id);
+    const user = data.users.find((user) => user.id === parsedId);
     return user || null;
 }
 
