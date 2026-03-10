@@ -3,7 +3,8 @@ export function setCookie(res, name, value) {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         sameSite: "lax",
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV === "production",
+        signed: true
     });
 }
 

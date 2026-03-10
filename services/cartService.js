@@ -8,7 +8,7 @@ export async function getCart(cartId) {
     const cartItemsDetailed = cart.items.map((item) => {
         const product = products.find((product) => product.id === parseInt(item.productId));
         //hallando subtotal de cada producto
-        const subtotal = (product.price * item.quantity) / 100;
+        const subtotal = product.price * item.quantity;
         return {
             ...item,
             product,

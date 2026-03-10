@@ -22,7 +22,7 @@
             <div class="cart__item-footer">
               <p class="cart__item-price">Precio: S/ <%= (item.product.price / 100).toFixed(2) %>
               </p>
-              <p class="cart__item-price">SubTotal: S/ <%= (item.subtotal).toFixed(2) %>
+              <p class="cart__item-price">SubTotal: S/ <%= (item.subtotal / 100).toFixed(2) %>
               </p>
 
               <div class="cart__item-quantity">
@@ -50,7 +50,7 @@
         <% }) %>
           <div class="cart__total">
             <p>Total</p>
-            <p>S/ <%= total.toFixed(2) %>
+            <p>S/ <%= (total / 100).toFixed(2) %>
             </p>
           </div>
           <div class="cart__action">

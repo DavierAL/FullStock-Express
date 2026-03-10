@@ -18,7 +18,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 
 //Middleware para manejar cookies
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET || "mi_secreto_super_seguro"));
 
 //Middleware para manejar autenticación
 app.use(authContext);
