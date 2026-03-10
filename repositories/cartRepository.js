@@ -12,14 +12,15 @@ export async function find(id) {
 }
 
 //Exportar la funcion find
+// Buscar un carrito de usuario logueado
 export async function findByUserId(userId) {
     const data = await getData();
 
     if (!data.carts) {
-        data.carts = []
+        data.carts = [];
     }
 
-    return data.carts.find(cart => cart.userId === userId) || null;
+    return data.carts.find((cart) => cart.userId === userId);
 }
 
 export async function create(userId = null) {
@@ -56,6 +57,17 @@ export async function update(cartData) {
     return data.carts.find(cart => cart.id === cartData.id);
 }
 
+export async function destroy(id) {
+    const data = await getData();
+
+    if (!data.carts) {
+        data.carts = [];
+    }
+
+    data.carts = data.carts.filter((cart) => cart.id !== id);
+
+    await saveData(data);
+}
 
 // Expone el objeto de datos completo para operaciones que necesitan
 // leer/escribir varias colecciones a la vez (ej: processCheckout)

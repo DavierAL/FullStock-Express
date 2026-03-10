@@ -15,9 +15,10 @@ export async function renderCart(req, res) {
 // POST /cart/add-item — agrega un producto al carrito
 export async function addItemToCart(req, res) {
     const cartId = req.cartId;
+    const userId = req.user?.id;
     const productId = req.body.productId;
 
-    const cart = await cartService.addItemToCart(cartId, productId);
+    const cart = await cartService.addItemToCart(cartId, productId, userId);
 
     if (!cartId) {
         cookiesUtils.setCookie(res, "cartId", cart.id);
