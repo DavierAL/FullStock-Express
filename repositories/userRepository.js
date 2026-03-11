@@ -31,3 +31,22 @@ export async function create(userData) {
     return newUser;
 }
 
+export async function update(id, updatedData) {
+    const data = await getData();
+    const parsedId = Number(id);
+
+    const userIndex = data.users.findIndex((user) => user.id === parsedId);
+
+    if (userIndex === -1) return null;
+
+    data.users[userIndex] = {
+        ...data.users[userIndex],
+        ...updatedData,
+        updatedAt: new Date().toISOString(), // Actualizamos la fecha de modificación
+    };
+
+    await saveData(data);
+
+    return data.users[userIndex];
+}
+

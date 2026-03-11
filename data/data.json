@@ -440,6 +440,11 @@
       "email": "davierlopez18dl@gmail.com",
       "password": "$2b$10$yPgkcPmOkUy3TDj3s9bq4u54Scp2MzpTWgFSAS07DrERQ0Mt2p7a.",
       "createdAt": "2026-03-03T01:16:58.690Z",
+      "firstName": "Davier",
+      "lastName": "Lopez",
+      "phone": "+51910361548",
+      "avatar": "/images/default-avatar.png",
+      "address": "Av. Reducto 1155, Miraflores",
       "updatedAt": "2026-03-03T01:16:58.692Z"
     },
     {
@@ -447,7 +452,12 @@
       "email": "testuser@example.com",
       "password": "$2b$10$HZIiclFptPkGxnz6owpEee6ZSSgqTOrbQYIAkGSSugAOixWFi6uRe",
       "createdAt": "2026-03-05T00:28:22.807Z",
-      "updatedAt": "2026-03-05T00:28:22.807Z"
+      "firstName": "test",
+      "lastName": "user",
+      "phone": "910361548",
+      "avatar": "",
+      "address": "Urb. Santa María del Valle MZ. F Lt. 17",
+      "updatedAt": "2026-03-11T05:00:16.861Z"
     }
   ]
 }

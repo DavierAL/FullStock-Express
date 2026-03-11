@@ -6,9 +6,9 @@
         <ul class="auth-nav__list">
           <% if (locals.user) { %>
             <li class="auth-nav__item">
-              <span class="auth-nav__link" style="color: var(--muted-foreground);">
-                <%= locals.user.email %>
-              </span>
+              <a href="/profile" class="auth-nav__link">
+                Mi Cuenta (<%= locals.user.firstName || locals.user.email %>)
+              </a>
             </li>
             <li class="auth-nav__item">
               <a href="/logout" class="auth-nav__link">Cerrar sesión</a>

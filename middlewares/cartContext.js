@@ -22,7 +22,7 @@ export async function cartContext(req, res, next) {
     if (req.user) {
         if (!cartIdCookie) clearCookie(res, "cartId");
         const cart = await cartService.getCartByUserId(req.user.id);
-        if (!cart) return;
+        if (!cart) return next();
 
         injectCart(req, res, cart);
 

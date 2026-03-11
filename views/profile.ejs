@@ -1,0 +1,45 @@
+<section class="section container">
+    <div class="category-header">
+        <h1 class="category-header__title">Mi Cuenta</h1>
+        <p class="category-header__description">Actualiza tus datos personales y dirección de envío.</p>
+    </div>
+
+    <% if (typeof error !=='undefined' ) { %>
+        <div class="error" style="margin-bottom: 2rem; color: red;">
+            <p>
+                <%= error %>
+            </p>
+        </div>
+        <% } %>
+
+            <form action="/profile" method="POST" style="max-width: 600px; margin: 0 auto;">
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="firstName" style="display: block; margin-bottom: 0.5rem;">Nombre</label>
+                    <input type="text" id="firstName" name="firstName" class="input-field"
+                        value="<%= user.firstName || '' %>" placeholder="Ej. Davier">
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="lastName" style="display: block; margin-bottom: 0.5rem;">Apellido</label>
+                    <input type="text" id="lastName" name="lastName" class="input-field"
+                        value="<%= user.lastName || '' %>" placeholder="Ej. Lopez">
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="phone" style="display: block; margin-bottom: 0.5rem;">Teléfono</label>
+                    <input type="tel" id="phone" name="phone" class="input-field" value="<%= user.phone || '' %>"
+                        placeholder="+51 999 999 999">
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label for="address" style="display: block; margin-bottom: 0.5rem;">Dirección de Envío</label>
+                    <textarea id="address" name="address" class="input-field" rows="3"
+                        placeholder="Av. Siempre Viva 123..."><%= user.address || '' %></textarea>
+                </div>
+
+                <button type="submit" class="button button--primary" style="width: 100%;">
+                    Guardar Cambios
+                </button>
+            </form>
+</section>

@@ -9,6 +9,7 @@ import { cartContext } from "./middlewares/cartContext.js";
 import { authContext } from "./middlewares/authContext.js";
 import { globalHandler } from "./middlewares/globalHandler.js";
 import authRouter from "./routes/authRouter.js";
+import profileRouter from "./routes/profileRouter.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -45,6 +46,7 @@ app.use(pageRouter);
 app.use(productRouter);
 app.use(cartRouter);
 app.use(authRouter);
+app.use(profileRouter);
 
 // Ruta no encontrada (404)
 app.use(notFoundHandler);

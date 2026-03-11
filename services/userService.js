@@ -12,3 +12,13 @@ export async function createUser(userData) {
     return await userRepository.create(userData);
 }
 
+export async function updateUser(id, newData) {
+    const updatedUser = await userRepository.update(id, newData);
+
+    if (!updatedUser) {
+        throw new Error("No se pudo actualizar: Usuario no encontrado");
+    }
+
+    return updatedUser;
+}
+
