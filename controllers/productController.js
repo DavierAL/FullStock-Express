@@ -5,29 +5,33 @@ import { parsePriceToCents } from "../utils/utils.js";
 
 export async function renderProductsByCategory(req, res) {
     const { slug } = req.params;
-    const { minPrice: minPriceQuery, maxPrice: maxPriceQuery } = req.query;
 
-    // Validar los queries Strings
-    const minPrice = parsePriceToCents(minPriceQuery); // Null;
+    const {
+        minPrice: minPriceQuery,
+        maxPrice: maxPriceQuery,
+        search,
+        tag,
+        sortBy
+    } = req.query;
+
+    const minPrice = parsePriceToCents(minPriceQuery);
     const maxPrice = parsePriceToCents(maxPriceQuery);
 
-    // console.log({ minPrice, maxPrice });
-
-    const filters = { minPrice, maxPrice }; //{ minPrice: null, maxPrice: 100 }
+    const filters = {
+        minPrice,
+        maxPrice,
+        search,
+        tag,
+        sortBy
+    };
 
     const category = await categoryService.getCategoryBySlug(slug);
 
     if (!category) {
-        throw new AppError(
-            "La categoría que esta buscando no se encuentra disponible",
-            404,
-        );
+        throw new AppError("La categoría que esta buscando no se encuentra disponible", 404);
     }
 
-    const products = await productService.getProductsByCategory(
-        category.id,
-        filters,
-    );
+    const products = await productService.getProductsByCategory(category.id, filters);
 
     res.render("category", {
         namePage: category.name,
@@ -35,6 +39,9 @@ export async function renderProductsByCategory(req, res) {
         products,
         minPrice: minPriceQuery || "",
         maxPrice: maxPriceQuery || "",
+        searchQuery: search || "",
+        tagQuery: tag || "",
+        sortByQuery: sortBy || "recent"
     });
 }
 
@@ -51,5 +58,19 @@ export async function renderProduct(req, res) {
     res.render("product", {
         namePage: "Producto",
         product: productFinded,
+    });
+}
+
+export async function renderSearchResults(req, res) {
+    // Capturamos lo que el usuario escribió en la barra de búsqueda (ej. /search?q=taza)
+    const query = req.query.q || "";
+
+    const products = await productService.searchGlobalProducts(query);
+
+    // Mostramos una nueva vista llamada "search-results"
+    res.render("search-results", {
+        namePage: `Resultados para "${query}"`,
+        searchQuery: query,
+        products
     });
 }

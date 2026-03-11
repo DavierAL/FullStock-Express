@@ -6,21 +6,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 3rem;
+  min-height: 3rem;
 }
 
 .header-main__separator {
-  display: none;
+  display: block;
 }
 
 @media (min-width: 40rem) {
   .header-main {
     position: relative;
-  }
-}
-
-@media (max-width: 639px) {
-  .header-main__separator {
-    display: block;
   }
 }

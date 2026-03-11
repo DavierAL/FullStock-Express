@@ -33,6 +33,7 @@
       "price": 2000,
       "description": "Viste tu pasión por React con estilo y comodidad en cada línea de código.",
       "categoryId": 1,
+      "tags": ["react", "frontend", "javascript"],
       "features": [
         "Estampado resistente que mantiene sus colores vibrantes lavado tras lavado.",
         "Hecho de algodón suave que asegura comodidad y frescura.",
@@ -47,6 +48,7 @@
       "price": 2000,
       "description": "Deja que tu amor por JavaScript hable a través de cada hilo de este polo.",
       "categoryId": 1,
+      "tags": ["javascript", "frontend", "backend"],
       "features": [
         "Logo de JavaScript bordado con precisión y detalle.",
         "Tela premium de algodón peinado.",
@@ -61,6 +63,7 @@
       "price": 2000,
       "description": "Conéctate al estilo con este polo de Node.js, tan robusto como tu código.",
       "categoryId": 1,
+      "tags": ["node", "backend", "javascript"],
       "features": [
         "Diseño minimalista con el logo de Node.js.",
         "Material transpirable ideal para largas sesiones de código.",
@@ -75,6 +78,7 @@
       "price": 2000,
       "description": "Tipa tu estilo con precisión: lleva tu pasión por TypeScript en cada hilo.",
       "categoryId": 1,
+      "tags": ["typescript", "frontend", "javascript"],
       "features": [
         "Logo de TypeScript estampado en alta calidad.",
         "Tejido antimanchas y duradero.",
@@ -89,6 +93,7 @@
       "price": 2500,
       "description": "Domina el servidor con estilo: viste con orgullo tu título de Backend Developer.",
       "categoryId": 1,
+      "tags": ["backend", "javascript", "node"],
       "features": [
         "Diseño exclusivo para desarrolladores backend.",
         "Material premium que mantiene su forma.",
@@ -103,6 +108,7 @@
       "price": 2500,
       "description": "Construye experiencias con estilo: luce con orgullo tu polo de Frontend Developer.",
       "categoryId": 1,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Diseño inspirado en elementos de UI/UX.",
         "Tela suave y ligera perfecta para el día a día.",
@@ -117,6 +123,7 @@
       "price": 2500,
       "description": "Domina ambos mundos con estilo: lleva tu título de FullStack Developer en cada línea de tu look.",
       "categoryId": 1,
+      "tags": ["fullstack", "javascript", "react", "node"],
       "features": [
         "Diseño que representa ambos mundos del desarrollo.",
         "Material premium de larga duración.",
@@ -131,6 +138,7 @@
       "price": 1500,
       "description": "Cuando el bug se convierte en arte: lleva con orgullo tu polo 'It's a feature'.",
       "categoryId": 1,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Estampado humorístico de alta calidad.",
         "Algodón orgánico certificado.",
@@ -145,6 +153,7 @@
       "price": 1500,
       "description": "El clásico del desarrollador: presume tu confianza con 'It works on my machine'.",
       "categoryId": 1,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Frase icónica del mundo del desarrollo.",
         "Material durable y cómodo.",
@@ -159,6 +168,7 @@
       "price": 299,
       "description": "Muestra tu amor por JavaScript con este elegante sticker clásico.",
       "categoryId": 3,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -173,6 +183,7 @@
       "price": 249,
       "description": "Decora tus dispositivos con el icónico átomo giratorio de React.",
       "categoryId": 3,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -187,6 +198,7 @@
       "price": 399,
       "description": "Visualiza el poder del control de versiones con este sticker de Git.",
       "categoryId": 3,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -201,6 +213,7 @@
       "price": 299,
       "description": "La adorable ballena de Docker llevando contenedores en un sticker único.",
       "categoryId": 3,
+      "tags": ["backend", "docker"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -215,6 +228,7 @@
       "price": 249,
       "description": "El querido pingüino Tux, mascota oficial de Linux, en formato sticker.",
       "categoryId": 3,
+      "tags": ["backend", "linux"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -229,6 +243,7 @@
       "price": 249,
       "description": "El elegante logo del editor favorito de los desarrolladores.",
       "categoryId": 3,
+      "tags": ["javascript", "vscode"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -243,6 +258,7 @@
       "price": 299,
       "description": "El alojamiento de repositorios más popular en un sticker de alta calidad.",
       "categoryId": 3,
+      "tags": ["javascript", "github"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -257,6 +273,7 @@
       "price": 299,
       "description": "El escudo naranja de HTML5, el lenguaje que estructura la web.",
       "categoryId": 3,
+      "tags": ["frontend", "html"],
       "features": [
         "Vinilo de alta calidad resistente al agua",
         "Adhesivo duradero que no deja residuos",
@@ -271,6 +288,7 @@
       "price": 1499,
       "description": "Disfruta tu café mientras programas con el logo de JavaScript.",
       "categoryId": 2,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",
@@ -285,6 +303,7 @@
       "price": 1399,
       "description": "Una taza que hace render de tu bebida favorita con estilo React.",
       "categoryId": 2,
+      "tags": ["frontend", "javascript", "react"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",
@@ -299,6 +318,7 @@
       "price": 1299,
       "description": "Commit a tu rutina diaria de café con esta taza de Git.",
       "categoryId": 2,
+      "tags": ["backend", "git"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",
@@ -313,6 +333,7 @@
       "price": 1599,
       "description": "Tu amor por los lenguajes estructurados en una taza de SQL.",
       "categoryId": 2,
+      "tags": ["backend", "sql"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",
@@ -327,6 +348,7 @@
       "price": 1399,
       "description": "Toma tu café con la libertad que solo Linux puede ofrecer.",
       "categoryId": 2,
+      "tags": ["backend", "linux"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",
@@ -341,6 +363,7 @@
       "price": 1499,
       "description": "Colabora con tu café en esta taza con el logo de GitHub.",
       "categoryId": 2,
+      "tags": ["frontend", "github"],
       "features": [
         "Cerámica de alta calidad",
         "Apta para microondas y lavavajillas",

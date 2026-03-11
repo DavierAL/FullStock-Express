@@ -32,11 +32,3 @@
   color: var(--accent-foreground);
 }
 
-@media (min-width: 640px) {
-  .main-nav {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}

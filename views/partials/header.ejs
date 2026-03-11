@@ -26,36 +26,39 @@
     </div>
   </div>
   <div class="container header-main">
-    <!-- Aquí va el resto del header -->
-  </div>
-  <div class="container header-main">
-    <div class="header-main__top">
-      <a href="/">
-        <img src="/images/fullstock-logo.svg" alt="FullStock inicio" width="128" height="32" />
+  <div class="header-main__top" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0;">
+    <a href="/">
+      <img src="/images/fullstock-logo.svg" alt="FullStock inicio" width="128" height="32" />
+    </a>
+
+    <form action="/search" method="GET" style="display: flex; gap: 0.5rem; flex: 1; max-width: 400px; min-width: 250px;">
+      <input type="text" name="q" class="input-field" placeholder="Buscar productos, etiquetas..." required
+        style="flex: 1;">
+      <button type="submit" class="button button--primary">Buscar</button>
+    </form>
+
+    <div class="header-actions">
+      <a href="/cart" class="button button--ghost button--xl-icon header-actions__cart" aria-label="Carrito de compras">
+        <img src="/images/icons/cart.svg" alt="Carrito de compras" />
+        <span class="header-actions__cart-badge">
+          <%= countCartProducts %>
+        </span>
       </a>
-      <div class="header-actions">
-        <a href="/cart" class="button button--ghost button--xl-icon header-actions__cart"
-          aria-label="Carrito de compras">
-          <img src="/images/icons/cart.svg" alt="Carrito de compras" />
-          <span class="header-actions__cart-badge">
-            <%= countCartProducts %>
-          </span>
-        </a>
-      </div>
     </div>
-    <div class="separator header-main__separator"></div>
-    <nav aria-label="Navegación principal" class="main-nav">
-      <ul class="main-nav__list" role="menubar">
-        <li class="main-nav__item" role="none">
-          <a href="/category/polos" role="menuitem" class="main-nav__link">Polos</a>
-        </li>
-        <li class="main-nav__item" role="none">
-          <a href="/category/tazas" role="menuitem" class="main-nav__link">Tazas</a>
-        </li>
-        <li class="main-nav__item" role="none">
-          <a href="/category/stickers" role="menuitem" class="main-nav__link">Stickers</a>
-        </li>
-      </ul>
-    </nav>
+  </div>
+  <div class="separator header-main__separator"></div>
+  <nav aria-label="Navegación principal" class="main-nav">
+    <ul class="main-nav__list" role="menubar">
+      <li class="main-nav__item" role="none">
+        <a href="/category/polos" role="menuitem" class="main-nav__link">Polos</a>
+      </li>
+      <li class="main-nav__item" role="none">
+        <a href="/category/tazas" role="menuitem" class="main-nav__link">Tazas</a>
+      </li>
+      <li class="main-nav__item" role="none">
+        <a href="/category/stickers" role="menuitem" class="main-nav__link">Stickers</a>
+      </li>
+    </ul>
+  </nav>
   </div>
 </header>
