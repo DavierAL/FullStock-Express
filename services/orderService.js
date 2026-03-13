@@ -2,7 +2,7 @@ import * as orderRepository from "../repositories/orderRepository.js";
 import * as cartService from "./cartService.js";
 import AppError from "../utils/errorUtils.js";
 
-export async function processCheckout(cartId, shippingInfo) {
+export async function processCheckout(cartId, shippingInfo, userId = null) {
     const cart = await cartService.getCart(cartId);
 
     if (!cart || cart.items.length === 0) {
@@ -19,6 +19,7 @@ export async function processCheckout(cartId, shippingInfo) {
     }));
 
     const order = {
+        userId,
         items,
         shippingInfo,
         total: cart.total,
@@ -33,4 +34,24 @@ export async function processCheckout(cartId, shippingInfo) {
 
 export async function getOrderById(id) {
     return await orderRepository.findById(id);
+}
+
+// 2. Obtener el detalle de una orden (CON SEGURIDAD)
+export async function getOrderDetail(orderId, userId) {
+    const order = await orderRepository.findById(orderId);
+
+    if (!order) {
+        throw new AppError("La orden que buscas no existe", 404);
+    }
+
+    if (order.userId !== userId) {
+        throw new AppError("No tienes permisos para ver el detalle de esta orden", 403);
+    }
+
+    return order;
+}
+
+// 3. Obtener todas las órdenes de un usuario
+export async function getOrdersByUserId(userId) {
+    return await orderRepository.findByUserId(userId);
 }

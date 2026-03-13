@@ -29,6 +29,18 @@ export async function findById(id) {
         return null;
     }
 
-    const order = db.orders.find((o) => o.id === id);
+    const orderId = Number(id);
+    const order = db.orders.find((o) => o.id === orderId);
     return order || null;
 }
+
+export async function findByUserId(userId) {
+    const data = await getData();
+    const parsedId = Number(userId);
+
+    // Filtramos las órdenes que coincidan con el userId
+    // Usamos reverse() para que las más nuevas salgan primero en la lista
+    const userOrders = data.orders.filter(order => order.userId === parsedId);
+    return userOrders.reverse();
+}
+
