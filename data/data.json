@@ -730,5 +730,107 @@
       "address": "Urb. Santa María del Valle MZ. F Lt. 17",
       "updatedAt": "2026-03-11T05:00:16.861Z"
     }
+  ],
+  "wishlists": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 1
+        },
+        {
+          "productId": 15
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": null,
+      "items": [
+        {
+          "productId": 18
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "userId": null,
+      "items": [
+        {
+          "productId": 11
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "userId": null,
+      "items": []
+    },
+    {
+      "id": 6,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "userId": null,
+      "items": []
+    },
+    {
+      "id": 8,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "userId": null,
+      "items": []
+    },
+    {
+      "id": 10,
+      "userId": null,
+      "items": []
+    },
+    {
+      "id": 11,
+      "userId": 2,
+      "items": []
+    },
+    {
+      "id": 12,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        }
+      ]
+    }
   ]
 }

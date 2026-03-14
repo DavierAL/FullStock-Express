@@ -11,6 +11,7 @@ import { globalHandler } from "./middlewares/globalHandler.js";
 import authRouter from "./routes/authRouter.js";
 import profileRouter from "./routes/profileRouter.js";
 import orderRouter from "./routes/orderRouter.js";
+import wishlistRouter from "./routes/wishlistRouter.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -49,6 +50,7 @@ app.use(cartRouter);
 app.use(authRouter);
 app.use(profileRouter);
 app.use(orderRouter);
+app.use(wishlistRouter);
 
 // Ruta no encontrada (404)
 app.use(notFoundHandler);

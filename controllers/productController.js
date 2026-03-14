@@ -1,5 +1,6 @@
 import * as categoryService from "../services/categoryService.js";
 import * as productService from "../services/productService.js";
+import * as wishlistService from "../services/wishlistService.js";
 import AppError from "../utils/errorUtils.js";
 import { parsePriceToCents } from "../utils/utils.js";
 
@@ -55,9 +56,21 @@ export async function renderProduct(req, res) {
         throw new AppError("Producto no encontrado", 404);
     }
 
+    const userId = req.user ? req.user.id : null;
+    const wishlistIdCookie = req.signedCookies ? req.signedCookies.wishlistId : null;
+    let isInWishlist = false;
+
+    if (userId || wishlistIdCookie) {
+        const wishlist = await wishlistService.getWishlist(wishlistIdCookie, userId);
+        if (wishlist && wishlist.items) {
+            isInWishlist = wishlist.items.some(item => item.productId === id);
+        }
+    }
+
     res.render("product", {
         namePage: "Producto",
         product: productFinded,
+        isInWishlist
     });
 }
 

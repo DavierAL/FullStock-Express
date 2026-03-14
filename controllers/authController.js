@@ -1,5 +1,6 @@
 import * as authService from "../services/authService.js";
 import * as cartService from "../services/cartService.js";
+import * as wishlistService from "../services/wishlistService.js";
 import * as cookiesUtils from "../utils/cookiesUtils.js";
 
 export async function renderSignup(req, res) {
@@ -21,6 +22,12 @@ export async function handleSignup(req, res) {
         if (req.cartId) {
             await cartService.mergeCarts(req.cartId, newUser.id);
         }
+
+        const wishlistIdCookie = req.cookies.wishlistId;
+        if (wishlistIdCookie) {
+            await wishlistService.mergeWishlists(wishlistIdCookie, newUser.id);
+        }
+
         res.redirect("/");
     } catch (error) {
 
@@ -48,6 +55,11 @@ export async function handleLogin(req, res) {
 
         if (req.cartId) {
             await cartService.mergeCarts(req.cartId, user.id);
+        }
+
+        const wishlistIdCookie = req.cookies.wishlistId;
+        if (wishlistIdCookie) {
+            await wishlistService.mergeWishlists(wishlistIdCookie, user.id);
         }
 
         res.redirect("/");

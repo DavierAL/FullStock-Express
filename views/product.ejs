@@ -19,6 +19,18 @@
           Agregar al Carrito
         </button>
       </form>
+      <form action="/wishlist/toggle" method="POST" style="margin-top: 1rem;">
+        <input type="hidden" name="productId" value="<%= product.id %>">
+          <% if (locals.isInWishlist) { %>
+            <button type="submit" class="button button--outline" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; color: red; border-color: red;">
+              ❤️ Quitar de Favoritos
+            </button>
+          <% } else { %>
+            <button type="submit" class="button button--outline" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%;">
+              🤍 Agregar a Favoritos
+            </button>
+          <% } %>
+      </form>
       <div class="separator product__separator"></div>
       <div class="product__features">
         <h2 class="product__features_title">Características</h2>
