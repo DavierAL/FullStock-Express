@@ -611,6 +611,41 @@
       "total": 4000,
       "status": "pending",
       "createdAt": "2026-03-13T04:10:58.967Z"
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 19,
+          "name": "Taza React",
+          "price": 1399,
+          "imgSrc": "/images/tazas/taza-react.png",
+          "quantity": 1
+        },
+        {
+          "productId": 21,
+          "name": "Taza SQL",
+          "price": 1599,
+          "imgSrc": "/images/tazas/taza-sql.png",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "email": "davierlopez18dl@gmail.com",
+        "firstName": "Davier Alejandro",
+        "lastName": "Lopez",
+        "company": "adasdad",
+        "address": "Av. Reducto 1155",
+        "city": "Miraflores",
+        "country": "PE",
+        "region": "Lima",
+        "zipCode": "15074",
+        "phone": "+51910361548"
+      },
+      "total": 2998,
+      "status": "pending",
+      "createdAt": "2026-03-14T03:39:42.440Z"
     }
   ],
   "users": [
