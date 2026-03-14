@@ -9,6 +9,7 @@ router.get("/cart", cartController.renderCart);
 router.post("/cart/add-item", cartController.addItemToCart);
 router.post("/cart/update-item", cartController.updateCartItem);
 router.post("/cart/delete-item", cartController.deleteItemFromCart);
+router.post("/cart/reorder/:id", cartController.reorder);
 
 // Order & Checkout
 router.get("/checkout", orderController.renderCheckout);

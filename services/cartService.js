@@ -48,8 +48,9 @@ export async function getOrCreateCart(cartId, userId = null) {
     return cart;
 }
 
-export async function addItemToCart(cartId, productId, userId = null) {
+export async function addItemToCart(cartId, productId, userId = null, quantityToAdd = 1) {
     productId = parseInt(productId);
+    quantityToAdd = parseInt(quantityToAdd) || 1;
     const cart = await getOrCreateCart(cartId, userId);
 
     // Buscamos el producto que el usuario agrego al carrito de compras
@@ -58,9 +59,9 @@ export async function addItemToCart(cartId, productId, userId = null) {
     );
 
     if (cartItem) {
-        cartItem.quantity += 1;
+        cartItem.quantity += quantityToAdd;
     } else {
-        cart.items.push({ productId, quantity: 1 });
+        cart.items.push({ productId, quantity: quantityToAdd });
     }
 
     const updatedCart = await cartRepository.update(cart);

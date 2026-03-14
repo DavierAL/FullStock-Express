@@ -1,5 +1,5 @@
-<section class="section container">
-    <div class="category-header">
+<section class="container">
+    <div class="category-header" style="margin-bottom: 2rem;">
         <h1 class="category-header__title">Mi Cuenta</h1>
         <p class="category-header__description">Actualiza tus datos personales y dirección de envío.</p>
     </div>
@@ -12,16 +12,19 @@
         </div>
         <% } %>
 
-    <div style="max-width: 600px; margin: 0 auto 2rem; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card);">
-        <div>
-            <h2 style="margin: 0 0 0.25rem 0; font-size: 1.25rem;">Mis Pedidos</h2>
-            <p style="margin: 0; color: var(--muted-foreground); font-size: 0.875rem;">Revisa el estado y el historial de tus compras</p>
-        </div>
-        <a href="/orders" class="button button--outline" style="display: flex; gap: 0.5rem; align-items: center;">
-            <img src="/images/icons/truck.svg" alt="pedidos" style="width: 20px; filter: grayscale(1);">
-            Ver historial
-        </a>
-    </div>
+            <div
+                style="max-width: 600px; margin: 0 auto 2rem; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card);">
+                <div>
+                    <h2 style="margin: 0 0 0.25rem 0; font-size: 1.25rem;">Mis Pedidos</h2>
+                    <p style="margin: 0; color: var(--muted-foreground); font-size: 0.875rem;">Revisa el estado y el
+                        historial de tus compras</p>
+                </div>
+                <a href="/orders" class="button button--outline"
+                    style="display: flex; gap: 0.5rem; align-items: center;">
+                    <img src="/images/icons/truck.svg" alt="pedidos" style="width: 20px; filter: grayscale(1);">
+                    Ver historial
+                </a>
+            </div>
 
             <form action="/profile" method="POST" style="max-width: 600px; margin: 0 auto;">
 
@@ -49,7 +52,7 @@
                         placeholder="Av. Siempre Viva 123..."><%= user.address || '' %></textarea>
                 </div>
 
-                <button type="submit" class="button button--primary" style="width: 100%;">
+                <button type="submit" class="button button--primary" style="width: 100%; margin-bottom: 4rem;">
                     Guardar Cambios
                 </button>
             </form>

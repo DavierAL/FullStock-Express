@@ -15,14 +15,12 @@
     <form action="/category/<%= category.slug %>" method="GET" class="price-filter__form"
       style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; margin-bottom: 2rem; background: var(--card); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border);">
 
-      <div style="flex: 1; min-width: 180px;">
-        <label for="search" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Buscar en <%= category.name %></label>
-        <input type="text" id="search" name="search" class="input-field" value="<%= searchQuery %>"
-          placeholder="Ej. React..." style="width: 100%;">
-      </div>
+
 
       <div style="flex: 1; min-width: 160px;">
-        <label for="sortBy" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Ordenar por</label>
+        <label for="sortBy"
+          style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Ordenar
+          por</label>
         <select id="sortBy" name="sortBy" class="input-field" style="height: 40px; width: 100%;">
           <option value="recent" <%=sortByQuery==='recent' ? 'selected' : '' %>>Relevancia</option>
           <option value="price-asc" <%=sortByQuery==='price-asc' ? 'selected' : '' %>>Precio: Menor a Mayor</option>
@@ -33,15 +31,19 @@
       </div>
 
       <div style="flex: 1; min-width: 120px;">
-        <label for="minPrice" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Precio Min</label>
-        <input type="number" name="minPrice" id="minPrice" class="input-field" value="<%= minPrice %>"
-          placeholder="Min" style="width: 100%;">
+        <label for="minPrice"
+          style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Precio
+          Min</label>
+        <input type="number" name="minPrice" id="minPrice" class="input-field" value="<%= minPrice %>" placeholder="Min"
+          style="width: 100%;">
       </div>
-      
+
       <div style="flex: 1; min-width: 120px;">
-        <label for="maxPrice" style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Precio Max</label>
-        <input type="number" name="maxPrice" id="maxPrice" class="input-field" value="<%= maxPrice %>"
-          placeholder="Max" style="width: 100%;">
+        <label for="maxPrice"
+          style="display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--foreground);">Precio
+          Max</label>
+        <input type="number" name="maxPrice" id="maxPrice" class="input-field" value="<%= maxPrice %>" placeholder="Max"
+          style="width: 100%;">
       </div>
 
       <div>
@@ -49,7 +51,8 @@
       </div>
     </form>
 
-    <div class="products__layout">      <% if(products.length===0) { %>
+    <div class="products__layout">
+      <% if(products.length===0) { %>
         <div class="products__no-stock">
           <h3 class="products__no-stock-title">No hay productos para esta categoría.</h3>
           <p class="products__no-stock-description">Intenta cambiar de categoría o los filtros aplicados.</p>

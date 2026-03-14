@@ -1,7 +1,6 @@
 import * as cartService from "../services/cartService.js";
+import * as orderService from "../services/orderService.js";
 import * as cookiesUtils from "../utils/cookiesUtils.js";
-
-// GET /cart — muestra el carrito
 export async function renderCart(req, res) {
     const cartId = req.cartId;
     const cart = await cartService.getCart(cartId);
@@ -42,4 +41,30 @@ export async function deleteItemFromCart(req, res) {
     res.redirect("/cart");
 }
 
+// POST /cart/reorder/:id — repite un pedido anterior
+export async function reorder(req, res) {
+    const cartId = req.cartId;
+    const userId = req.user?.id;
+    const orderId = Number(req.params.id);
 
+    try {
+        const order = await orderService.getOrderById(orderId);
+        if (!order) {
+            return res.redirect("/orders"); // Si no existe la orden, vuelve a los pedidos
+        }
+
+        let updatedCart;
+        for (const item of order.items) {
+            updatedCart = await cartService.addItemToCart(cartId, item.productId, userId, item.quantity);
+        }
+
+        if (!cartId && updatedCart) {
+            cookiesUtils.setCookie(res, "cartId", updatedCart.id);
+        }
+        res.redirect("/cart");
+
+    } catch (error) {
+        console.error("Error al repetir el pedido:", error);
+        res.redirect("/orders");
+    }
+}
