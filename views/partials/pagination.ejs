@@ -1,0 +1,44 @@
+<% if (pagination.totalPages> 1) { %>
+    <nav aria-label="Navegación de páginas" style="display: flex; justify-content: center; margin-top: 3rem;">
+        <ul style="display: flex; gap: 0.5rem; list-style: none; padding: 0;">
+
+            <li>
+                <% if (pagination.currentPage> 1) { %>
+                    <a href="?page=<%= pagination.currentPage - 1 %>&search=<%= searchQuery %>&sortBy=<%= sortByQuery %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>"
+                        class="button button--outline">
+                        &laquo; Anterior
+                    </a>
+                    <% } else { %>
+                        <button class="button button--outline" disabled style="opacity: 0.5; cursor: not-allowed;">
+                            &laquo; Anterior
+                        </button>
+                        <% } %>
+            </li>
+
+            <% for(let i=1; i <=pagination.totalPages; i++) { %>
+                <li>
+                    <a href="?page=<%= i %>&search=<%= searchQuery %>&sortBy=<%= sortByQuery %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>"
+                        class="button <%= pagination.currentPage === i ? 'button--primary' : 'button--outline' %>"
+                        style="padding: 0.5rem 1rem;">
+                        <%= i %>
+                    </a>
+                </li>
+                <% } %>
+
+                    <li>
+                        <% if (pagination.currentPage < pagination.totalPages) { %>
+                            <a href="?page=<%= pagination.currentPage + 1 %>&search=<%= searchQuery %>&sortBy=<%= sortByQuery %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>"
+                                class="button button--outline">
+                                Siguiente &raquo;
+                            </a>
+                            <% } else { %>
+                                <button class="button button--outline" disabled
+                                    style="opacity: 0.5; cursor: not-allowed;">
+                                    Siguiente &raquo;
+                                </button>
+                                <% } %>
+                    </li>
+
+        </ul>
+    </nav>
+    <% } %>

@@ -12,19 +12,18 @@ export async function renderProductsByCategory(req, res) {
         maxPrice: maxPriceQuery,
         search,
         tag,
-        sortBy
+        sortBy,
+        page: pageQuery,
+        limit: limitQuery
     } = req.query;
 
     const minPrice = parsePriceToCents(minPriceQuery);
     const maxPrice = parsePriceToCents(maxPriceQuery);
 
-    const filters = {
-        minPrice,
-        maxPrice,
-        search,
-        tag,
-        sortBy
-    };
+    const filters = { minPrice, maxPrice, search, tag, sortBy };
+
+    const page = parseInt(pageQuery) || 1;
+    const limit = parseInt(limitQuery) || 6;
 
     const category = await categoryService.getCategoryBySlug(slug);
 
@@ -32,12 +31,18 @@ export async function renderProductsByCategory(req, res) {
         throw new AppError("La categoría que esta buscando no se encuentra disponible", 404);
     }
 
-    const products = await productService.getProductsByCategory(category.id, filters);
+    const { products, pagination } = await productService.getProductsByCategory(
+        category.id,
+        filters,
+        page,
+        limit
+    );
 
     res.render("category", {
         namePage: category.name,
         category,
         products,
+        pagination,
         minPrice: minPriceQuery || "",
         maxPrice: maxPriceQuery || "",
         searchQuery: search || "",

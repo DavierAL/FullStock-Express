@@ -1,6 +1,6 @@
 import * as productRepository from "../repositories/productRepository.js";
 
-export async function getProductsByCategory(categoryId, filters) {
+export async function getProductsByCategory(categoryId, filters, page = 1, limit = 6) {
     const products = await productRepository.findAll();
 
     const minPrice = filters.minPrice ?? -Infinity;
@@ -8,7 +8,7 @@ export async function getProductsByCategory(categoryId, filters) {
 
     const searchQuery = filters.search ? filters.search.toLowerCase() : "";
     const tagQuery = filters.tag ? filters.tag.toLowerCase() : "";
-    const sortBy = filters.sortBy || "recent"; // "recent", "price-asc", "price-desc", "name-asc", "name-desc"
+    const sortBy = filters.sortBy || "recent";
 
     const filteredProducts = products.filter((product) => {
         const matchesCategory = product.categoryId === categoryId;
@@ -32,7 +32,25 @@ export async function getProductsByCategory(categoryId, filters) {
         filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
     }
 
-    return filteredProducts;
+    const totalItems = filteredProducts.length;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    return {
+        products: paginatedProducts,
+        pagination: {
+            totalItems,
+            totalPages,
+            currentPage: page,
+            limit,
+            startItem: totalItems === 0 ? 0 : startIndex + 1,
+            endItem: Math.min(endIndex, totalItems)
+        }
+    };
 }
 
 export async function getProductById(productId) {

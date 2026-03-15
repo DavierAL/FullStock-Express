@@ -59,6 +59,17 @@
           <img src="/images/icons/no-stock.svg" alt="">
         </div>
         <% }else { %>
+          <div style="margin-bottom: 1.5rem; color: var(--muted-foreground); font-size: 0.875rem;">
+            <% if (pagination.totalItems> 0) { %>
+              Mostrando <strong>
+                <%= pagination.startItem %> - <%= pagination.endItem %>
+              </strong> de <strong>
+                <%= pagination.totalItems %>
+              </strong> productos
+              <% } else { %>
+                No se encontraron productos con estos filtros.
+                <% } %>
+          </div>
           <div class="products__grid">
             <% for (const product of products) { %>
               <a href="/product/<%= product.id %>" class="product-card">
@@ -79,6 +90,7 @@
                 </div>
               </a>
               <% } %>
+                <%- include('partials/pagination') %>
           </div>
           <% } %>
     </div>

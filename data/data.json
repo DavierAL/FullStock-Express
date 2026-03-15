@@ -812,7 +812,14 @@
     {
       "id": 11,
       "userId": 2,
-      "items": []
+      "items": [
+        {
+          "productId": 11
+        },
+        {
+          "productId": 21
+        }
+      ]
     },
     {
       "id": 12,
@@ -829,6 +836,18 @@
       "items": [
         {
           "productId": 1
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1
+        },
+        {
+          "productId": 20
         }
       ]
     }
