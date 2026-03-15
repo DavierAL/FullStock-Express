@@ -16,4 +16,8 @@ router.get("/checkout", orderController.renderCheckout);
 router.post("/checkout/place-order", orderController.placeOrder);
 router.get("/order-confirmation", orderController.renderOrderConfirmation);
 
+// Rutas para cupones
+router.post("/cart/apply-coupon", cartController.applyCoupon);
+router.post("/cart/remove-coupon", cartController.removeCoupon);
+
 export default router;

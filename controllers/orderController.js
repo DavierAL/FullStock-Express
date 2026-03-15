@@ -8,9 +8,15 @@ export async function renderCheckout(req, res) {
     const cart = await cartService.getCart(cartId);
     const { items: cartItems, total } = cart || { items: [], total: 0 };
 
+    if (!cartItems || cartItems.length === 0) {
+        return res.redirect('/cart');
+    }
+
     res.render("checkout", {
+        namePage: "Finalizar Compra",
         cartItems,
         total,
+        user: req.user || null
     });
 }
 

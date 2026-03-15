@@ -1,29 +1,63 @@
 import * as cartRepository from "../repositories/cartRepository.js";
 import * as productRepository from "../repositories/productRepository.js";
+import * as couponRepository from "../repositories/couponRepository.js";
 
 export async function getCart(cartId) {
     const cart = (await cartRepository.find(cartId)) || { id: 1, items: [] };
     const products = await productRepository.findAll();
-    // Modificar los items del carrito de compras
+
     const cartItemsDetailed = cart.items.map((item) => {
         const product = products.find((product) => product.id === parseInt(item.productId));
-        //hallando subtotal de cada producto
-        const subtotal = product.price * item.quantity;
-        return {
-            ...item,
-            product,
-            subtotal,
-        };
+        const subtotal = (product.price * item.quantity) / 100;
+        return { ...item, product, subtotal };
     });
-    //  calculando en total del carrito
-    const total = cartItemsDetailed.reduce(
+
+    const subtotal = cartItemsDetailed.reduce(
         (acumulador, item) => acumulador + item.subtotal,
         0,
     );
+
+    let discount = 0;
+    let appliedCoupon = null;
+
+    if (cart.couponCode) {
+        const coupon = await couponRepository.findByCode(cart.couponCode);
+        if (coupon) {
+            discount = (subtotal * coupon.discountPercentage) / 100;
+            appliedCoupon = coupon;
+        }
+    }
+
+    const total = subtotal - discount;
+
     return {
         items: cartItemsDetailed,
+        subtotal,
+        discount,
         total,
+        appliedCoupon
     };
+}
+
+export async function applyCoupon(cartId, code) {
+    const cart = await cartRepository.find(cartId);
+    if (!cart) throw new Error("Carrito no encontrado");
+
+    const coupon = await couponRepository.findByCode(code);
+    if (!coupon) throw new Error("Cupón inválido o expirado");
+
+    cart.couponCode = coupon.code;
+    await cartRepository.update(cart);
+    return cart;
+}
+
+export async function removeCoupon(cartId) {
+    const cart = await cartRepository.find(cartId);
+    if (!cart) return;
+
+    cart.couponCode = null;
+    await cartRepository.update(cart);
+    return cart;
 }
 
 // function para buscar el carrito dependiendo si es por id o por userId

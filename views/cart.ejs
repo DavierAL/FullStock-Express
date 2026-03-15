@@ -48,12 +48,47 @@
           </div>
         </div>
         <% }) %>
-          <div class="cart__total">
-            <p>Total</p>
-            <p>S/ <%= (total / 100).toFixed(2) %>
-            </p>
+          <div style="width: 100%; border-top: 2px solid var(--border); margin-top: 2rem; padding-top: 1rem;">
+
+            <div class="cart__total" style="font-size: 1.1rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">
+              <p>Subtotal</p>
+              <p>S/ <%= (subtotal / 100).toFixed(2) %>
+              </p>
+            </div>
+
+            <% if (typeof appliedCoupon !=='undefined' && appliedCoupon) { %>
+
+              <div class="cart__total" style="font-size: 1.1rem; color: #16a34a; margin-bottom: 1rem;">
+                <p style="display: flex; align-items: center; gap: 0.5rem;">
+                  Descuento (<%= appliedCoupon.code %>)
+                    <form action="/cart/remove-coupon" method="POST" style="display: inline;">
+                      <button type="submit"
+                        style="background: transparent; border: none; color: #ef4444; text-decoration: underline; cursor: pointer; font-size: 0.85rem; padding: 0;">Quitar</button>
+                    </form>
+                </p>
+                <p>-S/ <%= (discount / 100).toFixed(2) %>
+                </p>
+              </div>
+
+              <% } else { %>
+
+                <form action="/cart/apply-coupon" method="POST"
+                  style="display: flex; gap: 0.5rem; margin: 1rem 0 2rem;">
+                  <input type="text" name="couponCode" placeholder="Ingresa tu cupón" class="input-field"
+                    style="flex: 1; max-width: 300px;" required>
+                  <button type="submit" class="button button--outline">Aplicar</button>
+                </form>
+
+                <% } %>
+
+                  <div class="cart__total" style="font-size: 1.5rem; font-weight: bold;">
+                    <p>Total Final</p>
+                    <p>S/ <%= (total / 100).toFixed(2) %>
+                    </p>
+                  </div>
+
           </div>
-          <div class="cart__action">
+          <div class="cart__action" style="margin-top: 1.5rem;">
             <a class="button button--lg cart__action-button" href="/checkout">Continuar Compra</a>
           </div>
     </div>

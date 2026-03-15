@@ -1,14 +1,40 @@
 import * as cartService from "../services/cartService.js";
 import * as orderService from "../services/orderService.js";
 import * as cookiesUtils from "../utils/cookiesUtils.js";
+
 export async function renderCart(req, res) {
     const cartId = req.cartId;
     const cart = await cartService.getCart(cartId);
 
     res.render("cart", {
         cartItems: cart.items,
+        subtotal: cart.subtotal,
+        discount: cart.discount,
         total: cart.total,
+        appliedCoupon: cart.appliedCoupon
     });
+}
+
+//POST /cart/apply-coupon
+export async function applyCoupon(req, res) {
+    const cartId = req.cartId;
+    const { couponCode } = req.body;
+
+    try {
+        await cartService.applyCoupon(cartId, couponCode);
+    } catch (error) {
+        console.error("Error al aplicar cupón:", error.message);
+        // Aquí en el futuro podríamos mandar un mensaje de error a la vista
+    }
+
+    res.redirect("/cart");
+}
+
+// POST /cart/remove-coupon
+export async function removeCoupon(req, res) {
+    const cartId = req.cartId;
+    await cartService.removeCoupon(cartId);
+    res.redirect("/cart");
 }
 
 // POST /cart/add-item — agrega un producto al carrito

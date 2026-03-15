@@ -36,7 +36,8 @@
         <legend class="checkout__legend">Información de contacto</legend>
         <div class="input-field">
           <label for="email">Correo electrónico</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
+          <input id="email" name="email" type="email" autocomplete="email" value="<%= locals.user ? user.email : '' %>"
+            required />
         </div>
         <div class="separator checkout__separator"></div>
         <fieldset>
@@ -44,11 +45,13 @@
           <div class="checkout__form-fields">
             <div class="input-field">
               <label for="firstName">Nombre</label>
-              <input id="firstName" name="firstName" autocomplete="given-name" required />
+              <input id="firstName" name="firstName" autocomplete="given-name"
+                value="<%= locals.user ? user.firstName : '' %>" required />
             </div>
             <div class="input-field">
               <label for="lastName">Apellido</label>
-              <input id="lastName" name="lastName" autocomplete="family-name" required />
+              <input id="lastName" name="lastName" autocomplete="family-name"
+                value="<%= locals.user ? user.lastName : '' %>" required />
             </div>
             <div class="input-field">
               <label for="company">Compañia</label>
@@ -56,11 +59,13 @@
             </div>
             <div class="input-field">
               <label for="address">Dirección</label>
-              <input id="address" name="address" autocomplete="street-address" required />
+              <input id="address" name="address" autocomplete="street-address"
+                value="<%= locals.user ? user.address : '' %>" required />
             </div>
             <div class="input-field">
               <label for="city">Ciudad</label>
-              <input id="city" name="city" autocomplete="address-level2" required />
+              <input id="city" name="city" autocomplete="address-level2" value="<%= locals.user ? user.city : '' %>"
+                required />
             </div>
             <div class="select-field">
               <label for="country">País</label>
@@ -97,7 +102,7 @@
             </div>
             <div class="input-field">
               <label for="phone">Teléfono</label>
-              <input id="phone" name="phone" autocomplete="tel" required />
+              <input id="phone" name="phone" autocomplete="tel" value="<%= locals.user ? user.phone : '' %>" required />
             </div>
           </div>
         </fieldset>
