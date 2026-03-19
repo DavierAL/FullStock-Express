@@ -106,3 +106,20 @@ export async function reorder(req, res) {
         res.redirect("/orders");
     }
 }
+
+// GET /cart/mini — devuelve solo el HTML del interior del carrito
+export async function renderMiniCart(req, res, next) {
+    try {
+        const cartId = req.cartId;
+        const cart = await cartService.getCart(cartId);
+
+        // Renderizamos una vista parcial pequeña sin el diseño completo (layout)
+        res.render("partials/mini-cart", {
+            cartItems: cart.items,
+            total: cart.total,
+            layout: false // Esto evita que cargue el header y footer nuevamente
+        });
+    } catch (error) {
+        next(error);
+    }
+}

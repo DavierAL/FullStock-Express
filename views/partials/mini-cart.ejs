@@ -1,0 +1,41 @@
+<% if (cartItems.length===0) { %>
+    <div style="text-align: center; margin-top: 3rem; opacity: 0.6;">
+        <img src="/images/icons/cart.svg" alt="Vacío" style="width: 48px; margin-bottom: 1rem; filter: invert(0.5);">
+        <p>Tu carrito está vacío.</p>
+    </div>
+    <% } else { %>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+            <% cartItems.forEach(item=> { %>
+                <li style="display: flex; gap: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <img src="<%= item.product.imgSrc %>" alt="<%= item.product.name %>"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius);">
+
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0; font-size: 0.9rem;">
+                            <%= item.product.name %>
+                        </h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: var(--muted-foreground);">Cant: <%= item.quantity
+                                %>
+                        </p>
+                    </div>
+
+                    <div style="font-weight: bold; font-size: 0.95rem;">
+                        S/ <%= (item.subtotal).toFixed(2) %>
+                    </div>
+                </li>
+                <% }) %>
+        </ul>
+
+        <div style="margin-top: auto; border-top: 2px solid var(--border); padding-top: 1rem; padding-bottom: 1rem;">
+            <div
+                style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
+                <span>Total:</span>
+                <span>S/ <%= (total).toFixed(2) %></span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="/cart" class="button button--outline" style="text-align: center;">Ver Carrito Completo</a>
+                <a href="/checkout" class="button button--primary" style="text-align: center;">Pagar ahora</a>
+            </div>
+        </div>
+        <% } %>

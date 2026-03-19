@@ -20,4 +20,7 @@ router.get("/order-confirmation", orderController.renderOrderConfirmation);
 router.post("/cart/apply-coupon", cartController.applyCoupon);
 router.post("/cart/remove-coupon", cartController.removeCoupon);
 
+// Ruta para el carrito parcial
+router.get("/cart/mini", cartController.renderMiniCart); // <-- NUEVA RUTA
+
 export default router;

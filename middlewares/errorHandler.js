@@ -17,7 +17,7 @@ export default function errorHandler(err, req, res, next) {
 }
 
 export function notFoundHandler(req, res) {
-    res.status(404).render("error", {
+    res.status(404).render("404", {
         namePage: "Error",
         title: "404 - Página no encontrada",
         message: "La página que buscas no existe o ha sido cambiada.",

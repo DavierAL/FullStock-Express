@@ -75,3 +75,74 @@
   <span style="font-size: 1.2rem;">✅</span>
   <span id="toast-message" style="font-weight: 500;">Producto agregado al carrito</span>
 </div>
+
+<div id="cart-overlay"
+  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
+</div>
+
+<div id="cart-sidebar"
+  style="position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--background); box-shadow: -4px 0 15px rgba(0,0,0,0.2); z-index: 9999; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;">
+
+  <div
+    style="padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--muted);">
+    <h2 style="margin: 0; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+      <img src="/images/icons/cart.svg" alt="" style="width: 24px;"> Mi Carrito
+    </h2>
+    <button id="close-cart-btn"
+      style="background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: var(--muted-foreground);">&times;</button>
+  </div>
+
+  <div id="cart-sidebar-content"
+    style="padding: 1.5rem; flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+    <p style="text-align: center; color: var(--muted-foreground);">Cargando tu carrito...</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Elementos del DOM
+    const cartIcon = document.querySelector('a[href="/cart"]'); // Selecciona el icono del carrito del header
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    const cartSidebarContent = document.getElementById('cart-sidebar-content');
+
+    // 2. Función para ABRIR el sidebar y cargar datos
+    async function openCartSidebar(event) {
+      if (event) event.preventDefault(); // Evita que nos lleve a /cart de golpe
+
+      // Mostrar visualmente
+      cartSidebar.style.right = '0';
+      cartOverlay.style.opacity = '1';
+      cartOverlay.style.pointerEvents = 'auto';
+      document.body.style.overflow = 'hidden'; // Evita que la página del fondo haga scroll
+
+      // Pedir los datos al backend (AJAX)
+      try {
+        const response = await fetch('/cart/mini');
+        const html = await response.text();
+        cartSidebarContent.innerHTML = html; // Inyectamos el HTML
+      } catch (error) {
+        cartSidebarContent.innerHTML = '<p style="color: red; text-align: center;">Hubo un error al cargar el carrito.</p>';
+      }
+    }
+
+    // 3. Función para CERRAR el sidebar
+    function closeCartSidebar() {
+      cartSidebar.style.right = '-400px';
+      cartOverlay.style.opacity = '0';
+      cartOverlay.style.pointerEvents = 'none';
+      document.body.style.overflow = ''; // Restaura el scroll
+    }
+
+    // 4. Asignamos los "escuchadores de eventos"
+    if (cartIcon) cartIcon.addEventListener('click', openCartSidebar);
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCartSidebar);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCartSidebar);
+
+    // BONUS: Integración con tu script anterior del Toast
+    // Si tienes el código de addToCartForms.forEach(...) aquí mismo, 
+    // puedes agregar "openCartSidebar();" justo debajo de donde muestras el Toast
+    // para que el carrito se abra automáticamente al agregar algo.
+  });
+</script>
