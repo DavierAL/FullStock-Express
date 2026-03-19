@@ -42,12 +42,24 @@ export async function addItemToCart(req, res) {
     const cartId = req.cartId;
     const userId = req.user?.id;
     const productId = req.body.productId;
+    // Es buena práctica capturar la cantidad, por si en el futuro permites agregar más de 1 a la vez
+    const quantity = parseInt(req.body.quantity) || 1;
 
-    const cart = await cartService.addItemToCart(cartId, productId, userId);
+    const cart = await cartService.addItemToCart(cartId, productId, userId, quantity);
 
     if (!cartId) {
         cookiesUtils.setCookie(res, "cartId", cart.id);
     }
+
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        const totalItems = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+        return res.json({
+            success: true,
+            message: "Producto agregado al carrito",
+            totalItems: totalItems
+        });
+    }
+
     res.redirect("/cart");
 }
 

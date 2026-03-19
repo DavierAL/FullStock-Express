@@ -504,6 +504,32 @@
         }
       ],
       "total": 0
+    },
+    {
+      "id": 6,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 3
+        },
+        {
+          "productId": 10,
+          "quantity": 1
+        }
+      ],
+      "total": 0
+    },
+    {
+      "id": 7,
+      "userId": null,
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 1
+        }
+      ],
+      "total": 0
     }
   ],
   "orders": [
