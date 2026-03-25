@@ -3,23 +3,19 @@ import * as productRepository from "../repositories/productRepository.js";
 export async function getProductsByCategory(categoryId, filters, page = 1, limit = 6) {
     const products = await productRepository.findAll();
 
-    const minPrice = filters.minPrice ?? -Infinity;
-    const maxPrice = filters.maxPrice ?? Infinity;
-
     const searchQuery = filters.search ? filters.search.toLowerCase() : "";
     const tagQuery = filters.tag ? filters.tag.toLowerCase() : "";
     const sortBy = filters.sortBy || "recent";
 
     const filteredProducts = products.filter((product) => {
         const matchesCategory = product.categoryId === categoryId;
-        const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
         const matchesSearch = product.name.toLowerCase().includes(searchQuery);
 
         const matchesTag = tagQuery
             ? (product.tags && product.tags.some(t => t.toLowerCase() === tagQuery))
             : true;
 
-        return matchesCategory && matchesPrice && matchesSearch && matchesTag;
+        return matchesCategory && matchesSearch && matchesTag;
     });
 
     if (sortBy === "price-asc") {

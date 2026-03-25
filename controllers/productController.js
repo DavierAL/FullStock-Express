@@ -2,7 +2,6 @@ import * as categoryService from "../services/categoryService.js";
 import * as productService from "../services/productService.js";
 import * as wishlistService from "../services/wishlistService.js";
 import AppError from "../utils/errorUtils.js";
-import { parsePriceToCents } from "../utils/utils.js";
 
 export async function renderProductsByCategory(req, res) {
     const { slug } = req.params;
@@ -17,10 +16,7 @@ export async function renderProductsByCategory(req, res) {
         limit: limitQuery
     } = req.query;
 
-    const minPrice = parsePriceToCents(minPriceQuery);
-    const maxPrice = parsePriceToCents(maxPriceQuery);
-
-    const filters = { minPrice, maxPrice, search, tag, sortBy };
+    const filters = { search, tag, sortBy };
 
     const page = parseInt(pageQuery) || 1;
     const limit = parseInt(limitQuery) || 6;
@@ -38,10 +34,21 @@ export async function renderProductsByCategory(req, res) {
         limit
     );
 
+    const minPriceVal = minPriceQuery ? parseFloat(minPriceQuery) : "";
+    const maxPriceVal = maxPriceQuery ? parseFloat(maxPriceQuery) : "";
+
+    const productsWithVisibility = products.map((product) => {
+        const price = product.price / 100;
+        const isVisible =
+            (minPriceVal === "" || price >= minPriceVal) &&
+            (maxPriceVal === "" || price <= maxPriceVal);
+        return { ...product, isVisible };
+    });
+
     res.render("category", {
         namePage: category.name,
         category,
-        products,
+        products: productsWithVisibility,
         pagination,
         minPrice: minPriceQuery || "",
         maxPrice: maxPriceQuery || "",

@@ -68,3 +68,7 @@
   color: var(--primary-foreground);
   background-color: var(--primary-background);
 }
+
+.product-card[data-visible="false"] {
+  display: none;
+}

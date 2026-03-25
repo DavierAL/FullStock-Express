@@ -1,3 +1,4 @@
+<script src="/js/price-filter.js" type="module"></script>
 <section class="category-header">
   <div class="container">
     <div class="category-header__content">
@@ -12,7 +13,7 @@
 </section>
 <section class="products">
   <div class="container">
-    <form action="/category/<%= category.slug %>" method="GET" class="price-filter__form"
+    <form action="/category/<%= category.slug %>" method="GET" class="price-filter__form" data-js="filter-form"
       style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; margin-bottom: 2rem; background: var(--card); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border);">
 
 
@@ -72,7 +73,7 @@
           </div>
           <div class="products__grid">
             <% for (const product of products) { %>
-              <a href="/product/<%= product.id %>" class="product-card">
+              <a href="/product/<%= product.id %>" class="product-card" data-js="product-card" data-price="<%= product.price / 100 %>" data-visible="<%= product.isVisible %>">
                 <div class="product-card__container">
                   <div class="product-card__image-container">
                     <img src="<%= product.imgSrc %>" alt="<%= product.name %>" class="product-card__image" />
