@@ -1,4 +1,5 @@
 <!-- views/login.ejs -->
+<script type="module" src="/js/toggle-password.js"></script>
 <section class="section">
     <div class="container login">
         <h1 class="login__title">Inicia sesión en tu cuenta</h1>
@@ -7,7 +8,7 @@
             <div class="input-field"> <label for="email">Correo electrónico</label> <input id="email" name="email"
                     autocomplete="email" required value="<%= locals.values?.email || '' %>" /> </div>
             <div class="input-field"> <label for="password">Contraseña</label> <input id="password" name="password"
-                    type="password" required autocomplete="current-password" /> </div> <button type="submit"
+                    type="password" required autocomplete="current-password" data-toggle-password /> </div> <button type="submit"
                 class="button button--lg login__submit"> Iniciar sesión </button> <!-- Mensaje de error, si existe -->
             <% if (locals.error) { %>
                 <p class="login__error">

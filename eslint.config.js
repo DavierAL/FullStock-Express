@@ -17,4 +17,12 @@ export default [
       eqeqeq: ["error", "always"],
     },
   },
+  {
+    files: ["public/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
 ];
