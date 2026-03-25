@@ -1,3 +1,4 @@
+<script src="/js/add-to-cart.js" type="module"></script>
 <section class="product">
   <div class="container product__container">
     <div class="product__image">
@@ -12,7 +13,7 @@
       <p class="product__description">
         <%= product.description %>
       </p>
-      <form method="post" action="/cart/add-item">
+      <form method="post" action="/cart/add-item" data-js="add-to-cart-form">
         <input type="hidden" name="productId" value="<%= product.id %>">
         <input type="hidden" name="pathProduct" value="/product/<%= product.id%>">
         <button class="button button--xl product__button" type="submit">

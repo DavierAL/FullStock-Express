@@ -52,12 +52,7 @@ export async function addItemToCart(req, res) {
     }
 
     if (req.headers.accept && req.headers.accept.includes('application/json')) {
-        const totalItems = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-        return res.json({
-            success: true,
-            message: "Producto agregado al carrito",
-            totalItems: totalItems
-        });
+        return res.status(201).json({ cart });
     }
 
     res.redirect("/cart");
