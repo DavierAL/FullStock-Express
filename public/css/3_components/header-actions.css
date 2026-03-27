@@ -23,6 +23,6 @@
   height: 1.25rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  color: var(--primary-foreground);
-  background-color: var(--primary-background);
+  color: var(--accent-contrast);
+  background-color: var(--primary);
 }

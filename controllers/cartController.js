@@ -27,6 +27,11 @@ export async function applyCoupon(req, res) {
         // Aquí en el futuro podríamos mandar un mensaje de error a la vista
     }
 
+    if (req.accepts(["html", "json"]) === "json") {
+        const cart = await cartService.getCart(cartId);
+        return res.json({ cart });
+    }
+
     res.redirect("/cart");
 }
 
@@ -34,6 +39,12 @@ export async function applyCoupon(req, res) {
 export async function removeCoupon(req, res) {
     const cartId = req.cartId;
     await cartService.removeCoupon(cartId);
+
+    if (req.accepts(["html", "json"]) === "json") {
+        const cart = await cartService.getCart(cartId);
+        return res.json({ cart });
+    }
+
     res.redirect("/cart");
 }
 
@@ -63,6 +74,12 @@ export async function updateCartItem(req, res) {
     const cartId = req.cartId;
     const { productId, quantity } = req.body;
     await cartService.updateCartItem(cartId, productId, quantity);
+
+    if (req.accepts(["html", "json"]) === "json") {
+        const cart = await cartService.getCart(cartId);
+        return res.json({ cart });
+    }
+
     res.redirect("/cart");
 }
 
@@ -71,6 +88,12 @@ export async function deleteItemFromCart(req, res) {
     const cartId = req.cartId;
     const { productId } = req.body;
     await cartService.deleteItemFromCart(cartId, productId);
+
+    if (req.accepts(["html", "json"]) === "json") {
+        const cart = await cartService.getCart(cartId);
+        return res.json({ cart });
+    }
+
     res.redirect("/cart");
 }
 

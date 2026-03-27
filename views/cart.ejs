@@ -1,9 +1,16 @@
+<script type="module">
+  import { mountCart } from "/js/cart.js";
+
+  const cartContainer = document.querySelector("[data-js='cart-container']");
+  mountCart(cartContainer);
+</script>
+
 <section class="section">
   <div class="container cart">
     <h1 class="cart__title">Carrito de compras</h1>
-    <div class="cart__container">
+    <div class="cart__container" data-js="cart-container">
       <% cartItems.forEach((item)=> { %>
-        <div id="<%= `product-${item.productId}` %>" class="cart__item">
+        <div id="<%= `product-${item.productId}` %>" class="cart__item" data-js="cart-item">
           <div class="cart__item-image">
             <img src="<%= item.product.imgSrc %>" alt="<%= item.product.name %>" class="cart__item-image-content" />
           </div>

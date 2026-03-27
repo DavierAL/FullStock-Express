@@ -12,15 +12,10 @@ const pageTitleByPath = {
 
 export async function globalHandler(req, res, next) {
     const path = req.path;
-    const cartId = req.cookies.cartId;
     res.locals.namePage = pageTitleByPath[path] || "Full Stock";
 
-    // Leer mi archivo data.json
-    const carFinded = await find(cartId);
-
-    res.locals.countCartProducts = carFinded
-        ? carFinded.items.reduce((total, item) => total + item.quantity, 0)
+    res.locals.countCartProducts = req.cart
+        ? req.cart.items.reduce((total, item) => total + item.quantity, 0)
         : 0;
     next();
-
 }

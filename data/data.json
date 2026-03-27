@@ -474,14 +474,9 @@
     {
       "id": 3,
       "userId": 2,
-      "items": [
-        {
-          "productId": 1,
-          "quantity": 1
-        }
-      ],
+      "items": [],
       "total": 0,
-      "couponCode": "DEV20"
+      "couponCode": null
     },
     {
       "id": 4,
@@ -545,10 +540,31 @@
     {
       "id": 9,
       "userId": null,
+      "items": [],
+      "total": 0
+    },
+    {
+      "id": 10,
+      "userId": null,
       "items": [
         {
-          "productId": 1,
-          "quantity": 1
+          "productId": 18,
+          "quantity": 6
+        },
+        {
+          "productId": 19,
+          "quantity": 2
+        }
+      ],
+      "total": 0
+    },
+    {
+      "id": 11,
+      "userId": null,
+      "items": [
+        {
+          "productId": 18,
+          "quantity": 2
         }
       ],
       "total": 0
@@ -757,6 +773,41 @@
       "total": 5796,
       "status": "pending",
       "createdAt": "2026-03-14T03:47:56.996Z"
+    },
+    {
+      "id": 7,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 1,
+          "name": "Polo React",
+          "price": 2000,
+          "imgSrc": "/images/polos/polo-react.png",
+          "quantity": 3
+        },
+        {
+          "productId": 18,
+          "name": "Taza JavaScript",
+          "price": 1499,
+          "imgSrc": "/images/tazas/taza-js.png",
+          "quantity": 2
+        }
+      ],
+      "shippingInfo": {
+        "email": "testuser@example.com",
+        "firstName": "test",
+        "lastName": "user",
+        "company": "",
+        "address": "Urb. Santa María del Valle MZ. F Lt. 17",
+        "city": "Miraflores",
+        "country": "PE",
+        "region": "Lima",
+        "zipCode": "15074",
+        "phone": "910361548"
+      },
+      "total": 71.98400000000001,
+      "status": "pending",
+      "createdAt": "2026-03-26T00:06:33.281Z"
     }
   ],
   "users": [
@@ -919,6 +970,15 @@
       "id": 17,
       "userId": null,
       "items": []
+    },
+    {
+      "id": 18,
+      "userId": null,
+      "items": [
+        {
+          "productId": 18
+        }
+      ]
     }
   ],
   "coupons": [

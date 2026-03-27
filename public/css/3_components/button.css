@@ -9,8 +9,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   white-space: nowrap;
-  color: var(--primary-foreground);
-  background-color: var(--primary-background);
+  color: var(--accent-contrast);
+  background-color: var(--primary);
   transition: colors 0.2s;
   cursor: pointer;
 }
@@ -29,7 +29,7 @@
 
 /* Variants */
 .button:hover {
-  background-color: var(--primary-background-hover);
+  background-color: var(--primary-hover);
 }
 
 .button--secondary {

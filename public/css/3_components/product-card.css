@@ -65,8 +65,8 @@
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  color: var(--primary-foreground);
-  background-color: var(--primary-background);
+  color: var(--accent-contrast);
+  background-color: var(--primary);
 }
 
 .product-card[data-visible="false"] {
