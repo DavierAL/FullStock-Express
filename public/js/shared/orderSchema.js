@@ -6,7 +6,7 @@ const valueEmpty = (name, type) => {
 
 export const orderSchema = z.object({
     email: z.email("Email inválido"),
-    name: z.string().min(3, { error: valueEmpty("nombre", "m") }),
+    firstName: z.string().min(3, { error: valueEmpty("nombre", "m") }),
     lastName: z.string().min(3, { error: valueEmpty("apellido", "m") }),
     phone: z.string().min(9, { error: valueEmpty("teléfono", "m") }),
     company: z.string().optional(),

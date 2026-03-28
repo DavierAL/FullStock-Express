@@ -2,6 +2,8 @@ import * as authService from "../services/authService.js";
 import * as cartService from "../services/cartService.js";
 import * as wishlistService from "../services/wishlistService.js";
 import * as cookiesUtils from "../utils/cookiesUtils.js";
+import { loginSchema, signupSchema } from "../public/js/shared/authSchema.js";
+
 
 export async function renderSignup(req, res) {
     if (req.user) return res.redirect("/");
@@ -10,7 +12,16 @@ export async function renderSignup(req, res) {
 
 export async function handleSignup(req, res) {
     if (req.user) return res.redirect("/");
-    const { email, password, confirmPassword } = req.body;
+
+    const result = signupSchema.safeParse(req.body);
+    if (!result.success) {
+        const fieldErrors = result.error.flatten().fieldErrors;
+        return res.render("signup", {
+            errors: fieldErrors,
+            values: req.body
+        });
+    }
+    const { email, password, confirmPassword } = result.data;
 
     const normalizedEmail = email.trim().toLowerCase();
 
@@ -46,7 +57,17 @@ export async function renderLogin(req, res) {
 
 export async function handleLogin(req, res) {
     if (req.user) return res.redirect("/");
-    const { email, password } = req.body;
+
+    const result = loginSchema.safeParse(req.body);
+    if (!result.success) {
+        const fieldErrors = result.error.flatten().fieldErrors;
+        return res.render("login", {
+            errors: fieldErrors,
+            values: req.body
+        });
+    }
+
+    const { email, password } = result.data;
 
     try {
         const user = await authService.login(email, password);

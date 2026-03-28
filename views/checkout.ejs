@@ -32,77 +32,110 @@
               </div>
         </div>
       </div>
-      <form class="checkout__form" action="/checkout/place-order" method="post">
+      <form class="checkout__form" action="/checkout/place-order" method="post" novalidate>
+        <% if (locals.generalError) { %>
+            <div class="alert--error" style="margin-bottom: 2rem;">
+                <%= locals.generalError %>
+            </div>
+        <% } %>
         <legend class="checkout__legend">Información de contacto</legend>
-        <div class="input-field">
+        <div class="input-field <%= locals.errors && errors.email ? 'input-field--error' : '' %>">
           <label for="email">Correo electrónico</label>
-          <input id="email" name="email" type="email" autocomplete="email" value="<%= locals.user ? user.email : '' %>"
-            required />
+          <% if (locals.user) { %>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              value="<%= user.email %>"
+              readonly
+              required
+            />
+          <% } else { %>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              value="<%= locals.values && values.email ? values.email : '' %>"
+              required
+            />
+          <% } %>
+          <% if (locals.errors && errors.email) { %><span class="input-field__error"><%= errors.email[0] %></span><% } %>
         </div>
         <div class="separator checkout__separator"></div>
         <fieldset>
           <legend class="checkout__legend">Información de envío</legend>
           <div class="checkout__form-fields">
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.firstName ? 'input-field--error' : '' %>">
               <label for="firstName">Nombre</label>
               <input id="firstName" name="firstName" autocomplete="given-name"
-                value="<%= locals.user ? user.firstName : '' %>" required />
+                value="<%= locals.values ? values.firstName : (locals.user ? user.firstName : '') %>" required />
+              <% if (locals.errors && errors.firstName) { %><span class="input-field__error"><%= errors.firstName[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.lastName ? 'input-field--error' : '' %>">
               <label for="lastName">Apellido</label>
               <input id="lastName" name="lastName" autocomplete="family-name"
-                value="<%= locals.user ? user.lastName : '' %>" required />
+                value="<%= locals.values ? values.lastName : (locals.user ? user.lastName : '') %>" required />
+              <% if (locals.errors && errors.lastName) { %><span class="input-field__error"><%= errors.lastName[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.company ? 'input-field--error' : '' %>">
               <label for="company">Compañia</label>
-              <input id="company" name="company" autocomplete="organization" />
+              <input id="company" name="company" autocomplete="organization" value="<%= locals.values ? values.company : '' %>" />
+              <% if (locals.errors && errors.company) { %><span class="input-field__error"><%= errors.company[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.address ? 'input-field--error' : '' %>">
               <label for="address">Dirección</label>
               <input id="address" name="address" autocomplete="street-address"
-                value="<%= locals.user ? user.address : '' %>" required />
+                value="<%= locals.values ? values.address : (locals.user ? user.address : '') %>" required />
+              <% if (locals.errors && errors.address) { %><span class="input-field__error"><%= errors.address[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.city ? 'input-field--error' : '' %>">
               <label for="city">Ciudad</label>
-              <input id="city" name="city" autocomplete="address-level2" value="<%= locals.user ? user.city : '' %>"
+              <input id="city" name="city" autocomplete="address-level2" value="<%= locals.values ? values.city : (locals.user ? user.city : '') %>"
                 required />
+              <% if (locals.errors && errors.city) { %><span class="input-field__error"><%= errors.city[0] %></span><% } %>
             </div>
-            <div class="select-field">
+            <div class="select-field <%= locals.errors && errors.country ? 'input-field--error' : '' %>">
               <label for="country">País</label>
               <select id="country" name="country" autocomplete="country" required>
                 <option value="">Seleccionar país</option>
-                <option value="AR">Argentina</option>
-                <option value="BO">Bolivia</option>
-                <option value="CL">Chile</option>
-                <option value="CO">Colombia</option>
-                <option value="CR">Costa Rica</option>
-                <option value="CU">Cuba</option>
-                <option value="DO">República Dominicana</option>
-                <option value="EC">Ecuador</option>
-                <option value="SV">El Salvador</option>
-                <option value="GT">Guatemala</option>
-                <option value="HN">Honduras</option>
-                <option value="MX">México</option>
-                <option value="NI">Nicaragua</option>
-                <option value="PA">Panamá</option>
-                <option value="PY">Paraguay</option>
-                <option value="PE">Perú</option>
-                <option value="PR">Puerto Rico</option>
-                <option value="UY">Uruguay</option>
-                <option value="VE">Venezuela</option>
+                <option value="AR" <%= locals.values && values.country === 'AR' ? 'selected' : '' %>>Argentina</option>
+                <option value="BO" <%= locals.values && values.country === 'BO' ? 'selected' : '' %>>Bolivia</option>
+                <option value="CL" <%= locals.values && values.country === 'CL' ? 'selected' : '' %>>Chile</option>
+                <option value="CO" <%= locals.values && values.country === 'CO' ? 'selected' : '' %>>Colombia</option>
+                <option value="CR" <%= locals.values && values.country === 'CR' ? 'selected' : '' %>>Costa Rica</option>
+                <option value="CU" <%= locals.values && values.country === 'CU' ? 'selected' : '' %>>Cuba</option>
+                <option value="DO" <%= locals.values && values.country === 'DO' ? 'selected' : '' %>>República Dominicana</option>
+                <option value="EC" <%= locals.values && values.country === 'EC' ? 'selected' : '' %>>Ecuador</option>
+                <option value="SV" <%= locals.values && values.country === 'SV' ? 'selected' : '' %>>El Salvador</option>
+                <option value="GT" <%= locals.values && values.country === 'GT' ? 'selected' : '' %>>Guatemala</option>
+                <option value="HN" <%= locals.values && values.country === 'HN' ? 'selected' : '' %>>Honduras</option>
+                <option value="MX" <%= locals.values && values.country === 'MX' ? 'selected' : '' %>>México</option>
+                <option value="NI" <%= locals.values && values.country === 'NI' ? 'selected' : '' %>>Nicaragua</option>
+                <option value="PA" <%= locals.values && values.country === 'PA' ? 'selected' : '' %>>Panamá</option>
+                <option value="PY" <%= locals.values && values.country === 'PY' ? 'selected' : '' %>>Paraguay</option>
+                <option value="PE" <%= locals.values && values.country === 'PE' ? 'selected' : '' %>>Perú</option>
+                <option value="PR" <%= locals.values && values.country === 'PR' ? 'selected' : '' %>>Puerto Rico</option>
+                <option value="UY" <%= locals.values && values.country === 'UY' ? 'selected' : '' %>>Uruguay</option>
+                <option value="VE" <%= locals.values && values.country === 'VE' ? 'selected' : '' %>>Venezuela</option>
               </select>
+              <% if (locals.errors && errors.country) { %><span class="input-field__error"><%= errors.country[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.region ? 'input-field--error' : '' %>">
               <label for="region">Provincia/Estado</label>
-              <input id="region" name="region" autocomplete="address-level1" required />
+              <input id="region" name="region" autocomplete="address-level1" value="<%= locals.values ? values.region : '' %>" required />
+              <% if (locals.errors && errors.region) { %><span class="input-field__error"><%= errors.region[0] %></span><% } %>
             </div>
-            <div class="input-field">
-              <label for="zipCode">Código Postal</label>
-              <input id="zipCode" name="zipCode" autocomplete="postal-code" required />
+            <div class="input-field <%= locals.errors && errors.postalCode ? 'input-field--error' : '' %>">
+              <label for="postalCode">Código Postal</label>
+              <input id="postalCode" name="postalCode" autocomplete="postal-code" value="<%= locals.values ? values.postalCode : '' %>" required />
+              <% if (locals.errors && errors.postalCode) { %><span class="input-field__error"><%= errors.postalCode[0] %></span><% } %>
             </div>
-            <div class="input-field">
+            <div class="input-field <%= locals.errors && errors.phone ? 'input-field--error' : '' %>">
               <label for="phone">Teléfono</label>
-              <input id="phone" name="phone" autocomplete="tel" value="<%= locals.user ? user.phone : '' %>" required />
+              <input id="phone" name="phone" autocomplete="tel" value="<%= locals.values ? values.phone : (locals.user ? user.phone : '') %>" required />
+              <% if (locals.errors && errors.phone) { %><span class="input-field__error"><%= errors.phone[0] %></span><% } %>
             </div>
           </div>
         </fieldset>

@@ -474,7 +474,16 @@
     {
       "id": 3,
       "userId": 2,
-      "items": [],
+      "items": [
+        {
+          "productId": 1,
+          "quantity": 2
+        },
+        {
+          "productId": 10,
+          "quantity": 1
+        }
+      ],
       "total": 0,
       "couponCode": null
     },

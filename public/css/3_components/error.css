@@ -18,3 +18,13 @@
   margin-bottom: 1rem;
   color: var(--muted-foreground);
 }
+
+.alert--error {
+  background-color: #fee2e2;
+  border-left: 4px solid var(--danger, tomato);
+  color: #991b1b;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius, 0.25rem);
+  font-size: 0.875rem;
+}

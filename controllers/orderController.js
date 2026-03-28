@@ -1,6 +1,8 @@
 import * as cartService from "../services/cartService.js";
 import * as orderService from "../services/orderService.js";
 import AppError from "../utils/errorUtils.js";
+import { orderSchema } from "../public/js/shared/orderSchema.js";
+
 
 // GET /checkout — muestra el resumen del carrito + formulario de compra
 export async function renderCheckout(req, res) {
@@ -23,10 +25,40 @@ export async function renderCheckout(req, res) {
 // POST /checkout/place-order — procesa el formulario y crea la orden
 export async function placeOrder(req, res) {
     const cartId = req.cartId;
-    const shippingInfo = req.body;
     const userId = req.user ? req.user.id : null;
-    const newOrder = await orderService.processCheckout(cartId, shippingInfo, userId);
-    res.redirect(`/order-confirmation?orderId=${newOrder.id}`);
+
+    const result = orderSchema.safeParse(req.body);
+    if (!result.success) {
+        const cart = await cartService.getCart(cartId);
+        const fieldErrors = result.error.flatten().fieldErrors;
+        console.log(fieldErrors);
+
+        return res.render("checkout", {
+            namePage: "Finalizar Compra",
+            cartItems: cart.items,
+            total: cart.total,
+            errors: fieldErrors,
+            values: req.body
+        });
+    }
+
+    const shippingInfo = result.data;
+
+    try {
+        const newOrder = await orderService.processCheckout(cartId, shippingInfo, userId);
+        res.redirect(`/order-confirmation?orderId=${newOrder.id}`);
+    } catch (error) {
+        console.error("Error al procesar la compra:", error);
+        
+        const cart = await cartService.getCart(cartId);
+        return res.render("checkout", {
+            namePage: "Finalizar Compra",
+            cartItems: cart ? cart.items : [],
+            total: cart ? cart.total : 0,
+            generalError: error.message || "No se pudo procesar la orden. Intente de nuevo.",
+            values: req.body
+        });
+    }
 }
 
 // GET /order-confirmation — muestra la confirmación de la orden
