@@ -474,16 +474,7 @@
     {
       "id": 3,
       "userId": 2,
-      "items": [
-        {
-          "productId": 1,
-          "quantity": 2
-        },
-        {
-          "productId": 10,
-          "quantity": 1
-        }
-      ],
+      "items": [],
       "total": 0,
       "couponCode": null
     },
@@ -817,6 +808,41 @@
       "total": 71.98400000000001,
       "status": "pending",
       "createdAt": "2026-03-26T00:06:33.281Z"
+    },
+    {
+      "id": 8,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 1,
+          "name": "Polo React",
+          "price": 2000,
+          "imgSrc": "/images/polos/polo-react.png",
+          "quantity": 2
+        },
+        {
+          "productId": 10,
+          "name": "Sticker JavaScript",
+          "price": 299,
+          "imgSrc": "/images/stickers/sticker-js.png",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "email": "testuser@example.com",
+        "firstName": "test",
+        "lastName": "user",
+        "phone": "910361548",
+        "company": "",
+        "address": "Urb. Santa María del Valle MZ. F Lt. 17",
+        "city": "Miraflores",
+        "country": "PE",
+        "region": "Lima",
+        "postalCode": "15074"
+      },
+      "total": 42.99,
+      "status": "pending",
+      "createdAt": "2026-03-28T08:43:43.975Z"
     }
   ],
   "users": [

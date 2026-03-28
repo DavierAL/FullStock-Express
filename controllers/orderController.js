@@ -35,8 +35,8 @@ export async function placeOrder(req, res) {
 
         return res.render("checkout", {
             namePage: "Finalizar Compra",
-            cartItems: cart.items,
-            total: cart.total,
+            cartItems: cart ? cart.items : [],
+            total: cart ? cart.total : 0,
             errors: fieldErrors,
             values: req.body
         });
