@@ -42,6 +42,7 @@
 @import "3_components/checkout.css" layer(components);
 @import "3_components/order-confirmation.css" layer(components);
 @import "3_components/prose.css" layer(components);
+@import "3_components/profile.css" layer(components);
 
 /* 4 Utilities */
 /* @import "4_utilities/__.css" layer(utilities); */

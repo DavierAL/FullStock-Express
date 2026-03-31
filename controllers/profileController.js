@@ -8,7 +8,8 @@ export async function renderProfile(req, res) {
 
     res.render("profile", {
         namePage: "Mi Cuenta",
-        user: req.user
+        user: req.user,
+        success: req.query.success === "1"
     });
 }
 //Procesar el formulario cuando el usuario hace clic en "Guardar"
@@ -39,7 +40,7 @@ export async function handleUpdateProfile(req, res) {
         });
 
         // Recargamos la página para que vea sus datos actualizados
-        res.redirect("/profile");
+        res.redirect("/profile?success=1");
 
     } catch (error) {
         console.error("Error actualizando perfil:", error, 400);

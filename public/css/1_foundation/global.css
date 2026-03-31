@@ -60,6 +60,19 @@ select {
   background-color: var(--background);
 }
 
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  background-color: var(--background);
+  font-family: inherit;
+  resize: vertical;
+}
+
 fieldset {
   all: unset;
 }

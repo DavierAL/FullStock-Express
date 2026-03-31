@@ -1,0 +1,177 @@
+/* ── Profile Page ── */
+
+.profile {
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 4rem;
+}
+
+/* ── Header with avatar ── */
+.profile__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.profile__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-9), var(--accent-11));
+  color: var(--accent-contrast);
+  font-size: 1.5rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.profile__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.profile__user-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+}
+
+.profile__user-email {
+  font-size: 0.875rem;
+  color: var(--neutral-11);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Cards ── */
+.profile__card {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--background);
+}
+
+.profile__card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile__card-title svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: var(--neutral-11);
+}
+
+.profile__card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Two-column row for first/last name */
+.profile__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 30rem) {
+  .profile__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Account section ── */
+.profile__account-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.profile__account-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile__account-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile__account-item:first-child {
+  padding-top: 0;
+}
+
+.profile__account-label {
+  font-size: 0.875rem;
+  color: var(--neutral-11);
+}
+
+.profile__account-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.profile__account-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent-11);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  transition: color 0.15s;
+}
+
+.profile__account-link:hover {
+  color: var(--accent-9);
+  text-decoration: underline;
+}
+
+.profile__account-link--danger {
+  color: var(--danger);
+}
+
+.profile__account-link--danger:hover {
+  color: var(--danger-hover);
+}
+
+/* ── Submit button ── */
+.profile__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Success alert ── */
+.alert--success {
+  background-color: hsl(142 76% 94%);
+  border-left: 4px solid var(--success);
+  color: hsl(142 72% 22%);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -980,6 +980,13 @@
       "password": "$2b$10$PsDh5C1xaz4FWyoOXpfQe.HHB8Dw4lhiBIBbbtrBKuUqQcQeJ7Dpm",
       "createdAt": "2026-03-31T01:43:06.715Z",
       "updatedAt": "2026-03-31T01:43:06.715Z"
+    },
+    {
+      "id": 4,
+      "email": "test_new@test.com",
+      "password": "$2b$10$XDEY7zqf0qF1SlQK/nWmCOL6YG/WI4f8l.7ugoFBb2Cw2MGB6t0wu",
+      "createdAt": "2026-03-31T04:59:04.096Z",
+      "updatedAt": "2026-03-31T04:59:04.096Z"
     }
   ],
   "wishlists": [

@@ -1,63 +1,161 @@
-<section class="container">
-    <div class="category-header" style="margin-bottom: 2rem;">
-        <h1 class="category-header__title">Mi Cuenta</h1>
-        <p class="category-header__description">Actualiza tus datos personales y dirección de envío.</p>
+<script type="module">
+    import { setupFormValidation } from "/js/form-validation.js";
+    import { profileSchema } from "/js/shared/profileSchema.js";
+
+    const form = document.querySelector("[data-js='profile-form']");
+    setupFormValidation(form, profileSchema);
+</script>
+
+<section class="section container">
+    <div class="profile">
+
+        <!-- Cabecera del perfil: Avatar + Nombre + Email -->
+        <div class="profile__header">
+            <div class="profile__avatar">
+                <%= user.firstName && user.lastName ? user.firstName[0] + user.lastName[0] : user.email[0] %>
+            </div>
+            <div class="profile__user-info">
+                <h1 class="profile__user-name">
+                    <%= user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : 'Mi Cuenta' %>
+                </h1>
+                <span class="profile__user-email">
+                    <%= user.email %>
+                </span>
+            </div>
+        </div>
+
+        <!-- Mensaje de éxito -->
+        <% if (locals.success) { %>
+            <div class="alert--success">
+                ✅ Tus datos se han actualizado correctamente.
+            </div>
+            <% } %>
+
+                <!-- Mensaje de error general -->
+                <% if (locals.generalError) { %>
+                    <div class="alert--error">
+                        <p>
+                            <%= generalError %>
+                        </p>
+                    </div>
+                    <% } %>
+
+                        <form action="/profile" method="POST" data-js="profile-form" novalidate>
+
+                            <!-- Card: Información Personal -->
+                            <div class="profile__card">
+                                <h2 class="profile__card-title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                    Información Personal
+                                </h2>
+                                <div class="profile__card-fields">
+                                    <div class="profile__row">
+                                        <div
+                                            class="input-field <%= locals.errors && errors.firstName ? 'input-field--error' : '' %>">
+                                            <label for="firstName">Nombre</label>
+                                            <input type="text" id="firstName" name="firstName"
+                                                value="<%= user.firstName || '' %>" placeholder="Ej. Davier" required>
+                                            <% if (locals.errors && errors.firstName) { %><span
+                                                    class="input-field__error">
+                                                    <%= errors.firstName[0] %>
+                                                </span>
+                                                <% } %>
+                                        </div>
+
+                                        <div
+                                            class="input-field <%= locals.errors && errors.lastName ? 'input-field--error' : '' %>">
+                                            <label for="lastName">Apellido</label>
+                                            <input type="text" id="lastName" name="lastName"
+                                                value="<%= user.lastName || '' %>" placeholder="Ej. Lopez" required>
+                                            <% if (locals.errors && errors.lastName) { %><span
+                                                    class="input-field__error">
+                                                    <%= errors.lastName[0] %>
+                                                </span>
+                                                <% } %>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="input-field <%= locals.errors && errors.phone ? 'input-field--error' : '' %>">
+                                        <label for="phone">Teléfono</label>
+                                        <input type="tel" id="phone" name="phone" value="<%= user.phone || '' %>"
+                                            placeholder="+51 999 999 999" required>
+                                        <% if (locals.errors && errors.phone) { %><span class="input-field__error">
+                                                <%= errors.phone[0] %>
+                                            </span>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card: Dirección de Envío -->
+                            <div class="profile__card">
+                                <h2 class="profile__card-title">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                    Dirección de Envío
+                                </h2>
+                                <div class="profile__card-fields">
+                                    <div
+                                        class="input-field <%= locals.errors && errors.address ? 'input-field--error' : '' %>">
+                                        <label for="address">Dirección</label>
+                                        <textarea id="address" name="address" rows="3"
+                                            placeholder="Av. Siempre Viva 123..."
+                                            required><%= user.address || '' %></textarea>
+                                        <% if (locals.errors && errors.address) { %><span class="input-field__error">
+                                                <%= errors.address[0] %>
+                                            </span>
+                                            <% } %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="button button--lg profile__submit ">
+                                Guardar Cambios
+                            </button>
+                        </form>
+
+                        <!-- Card: Tu Cuenta -->
+                        <div class="profile__card">
+                            <h2 class="profile__card-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                Tu Cuenta
+                            </h2>
+                            <div class="profile__account-list">
+                                <div class="profile__account-item">
+                                    <span class="profile__account-label">Correo electrónico</span>
+                                    <span class="profile__account-value">
+                                        <%= user.email %>
+                                    </span>
+                                </div>
+                                <div class="profile__account-item">
+                                    <span class="profile__account-label">Mis Pedidos</span>
+                                    <a href="/orders" class="profile__account-link">
+                                        Ver historial →
+                                    </a>
+                                </div>
+                                <div class="profile__account-item">
+                                    <span class="profile__account-label">Sesión</span>
+                                    <a href="/logout" class="profile__account-link profile__account-link--danger">
+                                        Cerrar sesión
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
     </div>
-
-        <% if (typeof generalError !=='undefined' ) { %>
-            <div class="alert--error" style="max-width: 600px; margin: 0 auto 2rem;">
-                <p>
-                    <%= generalError %>
-                </p>
-            </div>
-        <% } %>
-
-            <div
-                style="max-width: 600px; margin: 0 auto 2rem; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card);">
-                <div>
-                    <h2 style="margin: 0 0 0.25rem 0; font-size: 1.25rem;">Mis Pedidos</h2>
-                    <p style="margin: 0; color: var(--muted-foreground); font-size: 0.875rem;">Revisa el estado y el
-                        historial de tus compras</p>
-                </div>
-                <a href="/orders" class="button button--outline"
-                    style="display: flex; gap: 0.5rem; align-items: center;">
-                    <img src="/images/icons/truck.svg" alt="pedidos" style="width: 20px; filter: grayscale(1);">
-                    Ver historial
-                </a>
-            </div>
-
-            <form action="/profile" method="POST" style="max-width: 600px; margin: 0 auto;" novalidate>
-
-                <div class="input-field <%= locals.errors && errors.firstName ? 'input-field--error' : '' %>" style="margin-bottom: 1.5rem;">
-                    <label for="firstName" style="display: block; margin-bottom: 0.5rem;">Nombre</label>
-                    <input type="text" id="firstName" name="firstName"
-                        value="<%= user.firstName || '' %>" placeholder="Ej. Davier" required>
-                    <% if (locals.errors && errors.firstName) { %><span class="input-field__error"><%= errors.firstName[0] %></span><% } %>
-                </div>
-
-                <div class="input-field <%= locals.errors && errors.lastName ? 'input-field--error' : '' %>" style="margin-bottom: 1.5rem;">
-                    <label for="lastName" style="display: block; margin-bottom: 0.5rem;">Apellido</label>
-                    <input type="text" id="lastName" name="lastName"
-                        value="<%= user.lastName || '' %>" placeholder="Ej. Lopez" required>
-                    <% if (locals.errors && errors.lastName) { %><span class="input-field__error"><%= errors.lastName[0] %></span><% } %>
-                </div>
-
-                <div class="input-field <%= locals.errors && errors.phone ? 'input-field--error' : '' %>" style="margin-bottom: 1.5rem;">
-                    <label for="phone" style="display: block; margin-bottom: 0.5rem;">Teléfono</label>
-                    <input type="tel" id="phone" name="phone" value="<%= user.phone || '' %>"
-                        placeholder="+51 999 999 999" required>
-                    <% if (locals.errors && errors.phone) { %><span class="input-field__error"><%= errors.phone[0] %></span><% } %>
-                </div>
-
-                <div class="input-field <%= locals.errors && errors.address ? 'input-field--error' : '' %>" style="margin-bottom: 2rem;">
-                    <label for="address" style="display: block; margin-bottom: 0.5rem;">Dirección de Envío</label>
-                    <textarea id="address" name="address" rows="3"
-                        placeholder="Av. Siempre Viva 123..." required><%= user.address || '' %></textarea>
-                    <% if (locals.errors && errors.address) { %><span class="input-field__error"><%= errors.address[0] %></span><% } %>
-                </div>
-
-                <button type="submit" class="button button--primary" style="width: 100%; margin-bottom: 4rem;">
-                    Guardar Cambios
-                </button>
-            </form>
 </section>
