@@ -7,8 +7,6 @@ export async function authContext(req, res, next) {
 
     const userId = req.signedCookies.userId;
     if (!userId) {
-        clearCookie(res, "userId");
-
         return next();
     }
 

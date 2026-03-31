@@ -979,7 +979,11 @@
       "email": "ale@gmail.com",
       "password": "$2b$10$PsDh5C1xaz4FWyoOXpfQe.HHB8Dw4lhiBIBbbtrBKuUqQcQeJ7Dpm",
       "createdAt": "2026-03-31T01:43:06.715Z",
-      "updatedAt": "2026-03-31T01:43:06.715Z"
+      "updatedAt": "2026-03-31T05:09:19.615Z",
+      "firstName": "Davier Alejandro",
+      "lastName": "Lopez",
+      "phone": "910361548",
+      "address": "Av. Reducto 1155"
     },
     {
       "id": 4,

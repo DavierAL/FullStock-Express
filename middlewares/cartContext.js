@@ -5,7 +5,7 @@ import { clearCookie } from "../utils/cookiesUtils.js";
 function injectCart(req, res, cart) {
     req.cart = cart;
     req.cartId = cart.id;
-    res.locals.cartItemsCount = cart.items.reduce(
+    res.locals.countCartProducts = cart.items.reduce(
         (total, item) => total + item.quantity,
         0,
     );

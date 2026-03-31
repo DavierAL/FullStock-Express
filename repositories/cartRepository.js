@@ -1,5 +1,4 @@
-import { getData, saveData } from "../data/db.js"
-import { getNextId } from "../utils/db.js"
+import { getData, saveData, getNextId } from "../data/db.js"
 
 //Buscar un carrito de invitado por su id
 export async function find(id) {

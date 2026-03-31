@@ -6,11 +6,11 @@ const ERROR_TITLE = {
     "500": "Error interno del servidor",
 }
 
-export default function errorHandler(err, req, res, next) {
+export default function errorHandler(err, req, res, _next) {
     const status = err.statusCode || 500;
     const message = err.message || "Error interno del servidor";
     res.status(status).render("404", {
-        title: `${status} - ${ERROR_TITLE[status]} || `,
+        title: `${status} - ${ERROR_TITLE[status] || "Error desconocido"}`,
         message,
         path: "/",
     });
