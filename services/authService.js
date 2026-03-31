@@ -2,10 +2,7 @@ import * as userService from "../services/userService.js";
 import AppError from "../utils/errorUtils.js";
 import bcrypt from "bcryptjs";
 
-export async function signup(email, password, confirmPassword) {
-    if (password !== confirmPassword) {
-        throw new AppError("Las contraseñas no coinciden", 400);
-    }
+export async function signup(email, password) {
 
     const existUser = await userService.getUserByEmail(email);
     if (existUser) {

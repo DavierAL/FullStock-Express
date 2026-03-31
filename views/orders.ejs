@@ -1,39 +1,38 @@
 <section class="section container">
-    <div class="category-header" style="margin-bottom: 1rem;">
+    <div class="category-header">
         <h1 class="category-header__title">Mis Pedidos</h1>
         <p class="category-header__description">Revisa el historial y estado de tus compras.</p>
     </div>
 
-    <% if (orders.length===0) { %>
-        <div style="text-align: center; padding: 4rem 0;">
-            <img src="/images/icons/truck.svg" alt="Sin pedidos"
-                style="width: 64px; opacity: 0.5; margin-bottom: 1rem;">
+    <% if (orders.length === 0) { %>
+        <div class="orders-empty">
+            <img class="orders-empty__icon" src="/images/icons/truck.svg" alt="Sin pedidos">
             <h2>Aún no has realizado ningún pedido.</h2>
             <a href="/category/polos" class="button button--primary" style="margin-top: 1rem;">Explorar la tienda</a>
         </div>
-        <% } else { %>
-            <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
-                <% orders.forEach(order=> { %>
-                    <article
-                        style="border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <% } else { %>
+        <div class="orders-layout">
+            <div class="orders-list">
+                <% orders.forEach(order => { %>
+                    <article class="order-card">
                         <div>
-                            <h3 style="margin-bottom: 0.5rem;">Pedido #<%= order.id %>
-                            </h3>
-                            <p style="color: var(--muted-foreground); font-size: 0.875rem;">
+                            <h3 class="order-card__title">Pedido #<%= order.id %></h3>
+                            <p class="order-card__meta">
                                 Fecha: <%= new Date(order.createdAt).toLocaleDateString() %> <br>
-                                    Estado: <strong style="text-transform: capitalize; color: var(--primary);">
-                                        <%= order.status %>
-                                    </strong>
+                                Estado: <strong class="order-card__status">
+                                    <%= order.status %>
+                                </strong>
                             </p>
                         </div>
-                        <div style="text-align: right;">
-                            <p style="font-weight: bold; font-size: 1.25rem; margin-bottom: 0.5rem;">
+                        <div class="order-card__price-wrapper">
+                            <p class="order-card__price">
                                 S/ <%= order.total.toFixed(2) %>
                             </p>
                             <a href="/orders/<%= order.id %>" class="button button--outline">Ver detalle</a>
                         </div>
                     </article>
-                    <% }) %>
+                <% }) %>
             </div>
-            <% } %>
+        </div>
+    <% } %>
 </section>

@@ -7,7 +7,7 @@ import { loginSchema, signupSchema } from "../public/js/shared/authSchema.js";
 
 export async function renderSignup(req, res) {
     if (req.user) return res.redirect("/");
-    res.render("signup");
+    res.render("signup", { namePage: "Crear Cuenta" });
 }
 
 export async function handleSignup(req, res) {
@@ -21,12 +21,12 @@ export async function handleSignup(req, res) {
             values: req.body
         });
     }
-    const { email, password, confirmPassword } = result.data;
+    const { email, password } = result.data;
 
     const normalizedEmail = email.trim().toLowerCase();
 
     try {
-        const newUser = await authService.signup(normalizedEmail, password, confirmPassword);
+        const newUser = await authService.signup(normalizedEmail, password);
         cookiesUtils.setCookie(res, "userId", newUser.id);
 
         // fusionamos el carrito de invitado con el carrito del usuario recien creado
@@ -42,7 +42,7 @@ export async function handleSignup(req, res) {
         res.redirect("/");
     } catch (error) {
 
-        console.log(error);
+        console.error("Error en signup:", error.message);
         res.render("signup", {
             error: error.message,
             values: { email: normalizedEmail }
@@ -52,7 +52,7 @@ export async function handleSignup(req, res) {
 
 export async function renderLogin(req, res) {
     if (req.user) return res.redirect("/");
-    res.render("login");
+    res.render("login", { namePage: "Iniciar Sesión" });
 }
 
 export async function handleLogin(req, res) {
@@ -85,7 +85,7 @@ export async function handleLogin(req, res) {
 
         res.redirect("/");
     } catch (error) {
-        console.log(error);
+        console.error("Error en login:", error.message);
         res.render("login", {
             error: error.message,
             values: { email }

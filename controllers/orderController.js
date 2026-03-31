@@ -31,7 +31,6 @@ export async function placeOrder(req, res) {
     if (!result.success) {
         const cart = await cartService.getCart(cartId);
         const fieldErrors = result.error.flatten().fieldErrors;
-        console.log(fieldErrors);
 
         return res.render("checkout", {
             namePage: "Finalizar Compra",
@@ -75,6 +74,12 @@ export async function renderOrderConfirmation(req, res) {
         throw new AppError(`La orden con ID ${orderId} no fue encontrada.`, 404);
     }
 
+    // Verificar que la orden pertenece al usuario actual (o es una compra de invitado)
+    const userId = req.user ? req.user.id : null;
+    if (order.userId && order.userId !== userId) {
+        throw new AppError("No tienes permisos para ver esta confirmación.", 403);
+    }
+
     res.render("order-confirmation", {
         orderId,
     });
@@ -82,10 +87,6 @@ export async function renderOrderConfirmation(req, res) {
 
 // GET /orders — Lista todas las órdenes del usuario
 export async function renderOrders(req, res) {
-    // Si no está logueado, al login
-    if (!req.user) {
-        return res.redirect("/login");
-    }
 
     const orders = await orderService.getOrdersByUserId(req.user.id);
 
@@ -97,9 +98,6 @@ export async function renderOrders(req, res) {
 
 // GET /orders/:id — Muestra el detalle de una sola orden
 export async function renderOrderDetail(req, res) {
-    if (!req.user) {
-        return res.redirect("/login");
-    }
 
     const orderId = req.params.id;
 

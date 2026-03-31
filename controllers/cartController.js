@@ -7,6 +7,7 @@ export async function renderCart(req, res) {
     const cart = await cartService.getCart(cartId);
 
     res.render("cart", {
+        namePage: "Carrito",
         cartItems: cart.items,
         subtotal: cart.subtotal,
         discount: cart.discount,

@@ -1,12 +1,16 @@
 import { Router } from "express";
 import * as orderController from "../controllers/orderController.js";
+import { requireAuth } from "../middlewares/requireAuth.js";
 
 const router = Router();
 
-// Ruta para ver el historial completo de órdenes
-router.get("/orders", orderController.renderOrders);
+// Checkout
+router.get("/checkout", orderController.renderCheckout);
+router.post("/checkout/place-order", orderController.placeOrder);
+router.get("/order-confirmation", orderController.renderOrderConfirmation);
 
-// Ruta para ver el detalle de una orden específica
-router.get("/orders/:id", orderController.renderOrderDetail);
+// Historial de pedidos (requiere autenticación)
+router.get("/orders", requireAuth, orderController.renderOrders);
+router.get("/orders/:id", requireAuth, orderController.renderOrderDetail);
 
 export default router;

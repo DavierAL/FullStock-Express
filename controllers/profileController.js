@@ -2,9 +2,6 @@ import * as userService from "../services/userService.js";
 import { profileSchema } from "../public/js/shared/profileSchema.js";
 
 export async function renderProfile(req, res) {
-    if (!req.user) {
-        return res.redirect("/login");
-    }
 
     res.render("profile", {
         namePage: "Mi Cuenta",
@@ -14,9 +11,6 @@ export async function renderProfile(req, res) {
 }
 //Procesar el formulario cuando el usuario hace clic en "Guardar"
 export async function handleUpdateProfile(req, res) {
-    if (!req.user) {
-        return res.redirect("/login");
-    }
 
     const result = profileSchema.safeParse(req.body);
 
