@@ -568,6 +568,12 @@
         }
       ],
       "total": 0
+    },
+    {
+      "id": 12,
+      "userId": 3,
+      "items": [],
+      "total": 0
     }
   ],
   "orders": [
@@ -843,6 +849,104 @@
       "total": 42.99,
       "status": "pending",
       "createdAt": "2026-03-28T08:43:43.975Z"
+    },
+    {
+      "id": 9,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 18,
+          "name": "Taza JavaScript",
+          "price": 1499,
+          "imgSrc": "/images/tazas/taza-js.png",
+          "quantity": 1
+        },
+        {
+          "productId": 2,
+          "name": "Polo JavaScript",
+          "price": 2000,
+          "imgSrc": "/images/polos/polo-js.png",
+          "quantity": 1
+        },
+        {
+          "productId": 10,
+          "name": "Sticker JavaScript",
+          "price": 299,
+          "imgSrc": "/images/stickers/sticker-js.png",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "email": "testuser@example.com",
+        "firstName": "test",
+        "lastName": "user",
+        "phone": "910361548",
+        "company": "",
+        "address": "Urb. Santa María del Valle MZ. F Lt. 17",
+        "city": "Miraflores",
+        "country": "PE",
+        "region": "Lima",
+        "postalCode": "15074"
+      },
+      "total": 37.980000000000004,
+      "status": "pending",
+      "createdAt": "2026-03-31T00:34:42.626Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "items": [
+        {
+          "productId": 2,
+          "name": "Polo JavaScript",
+          "price": 2000,
+          "imgSrc": "/images/polos/polo-js.png",
+          "quantity": 1
+        },
+        {
+          "productId": 18,
+          "name": "Taza JavaScript",
+          "price": 1499,
+          "imgSrc": "/images/tazas/taza-js.png",
+          "quantity": 1
+        },
+        {
+          "productId": 10,
+          "name": "Sticker JavaScript",
+          "price": 299,
+          "imgSrc": "/images/stickers/sticker-js.png",
+          "quantity": 1
+        },
+        {
+          "productId": 13,
+          "name": "Sticker Docker",
+          "price": 299,
+          "imgSrc": "/images/stickers/sticker-docker.png",
+          "quantity": 1
+        },
+        {
+          "productId": 12,
+          "name": "Sticker Git",
+          "price": 399,
+          "imgSrc": "/images/stickers/sticker-git.png",
+          "quantity": 1
+        }
+      ],
+      "shippingInfo": {
+        "email": "ale@gmail.com",
+        "firstName": "Davier Alejandro",
+        "lastName": "Lopez",
+        "phone": "910361548",
+        "company": "Mascotify",
+        "address": "Mz L LOTE 7 SANTA MARÍA DEL VALLE SMP, 2",
+        "city": "San Martín De Porres",
+        "country": "PE",
+        "region": "San Martín",
+        "postalCode": "07031"
+      },
+      "total": 44.96000000000001,
+      "status": "pending",
+      "createdAt": "2026-03-31T01:44:17.000Z"
     }
   ],
   "users": [
@@ -869,6 +973,13 @@
       "avatar": "",
       "address": "Urb. Santa María del Valle MZ. F Lt. 17",
       "updatedAt": "2026-03-11T05:00:16.861Z"
+    },
+    {
+      "id": 3,
+      "email": "ale@gmail.com",
+      "password": "$2b$10$PsDh5C1xaz4FWyoOXpfQe.HHB8Dw4lhiBIBbbtrBKuUqQcQeJ7Dpm",
+      "createdAt": "2026-03-31T01:43:06.715Z",
+      "updatedAt": "2026-03-31T01:43:06.715Z"
     }
   ],
   "wishlists": [
@@ -1014,6 +1125,11 @@
           "productId": 18
         }
       ]
+    },
+    {
+      "id": 19,
+      "userId": 3,
+      "items": []
     }
   ],
   "coupons": [

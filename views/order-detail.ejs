@@ -25,16 +25,16 @@
                 de Envío</h3>
             <p style="margin-bottom: 0.5rem;"><strong>Recibe:</strong>
                 <%= order.shippingInfo ? order.shippingInfo.firstName : order.firstName %>
-                <%= order.shippingInfo ? order.shippingInfo.lastName : order.lastName %>
+                    <%= order.shippingInfo ? order.shippingInfo.lastName : order.lastName %>
             </p>
             <p style="margin-bottom: 0.5rem;"><strong>Dirección:</strong>
-                <%= order.shippingInfo ? order.shippingInfo.address : order.address %>, 
-                <%= order.shippingInfo ? order.shippingInfo.city : order.city %>, 
-                <%= order.shippingInfo ? order.shippingInfo.region : order.region %>
+                <%= order.shippingInfo ? order.shippingInfo.address : order.address %>,
+                    <%= order.shippingInfo ? order.shippingInfo.city : order.city %>,
+                        <%= order.shippingInfo ? order.shippingInfo.region : order.region %>
             </p>
             <p style="margin-bottom: 0;"><strong>Contacto:</strong>
-                <%= order.shippingInfo ? order.shippingInfo.email : order.email %> | 
-                <%= order.shippingInfo ? order.shippingInfo.phone : order.phone %>
+                <%= order.shippingInfo ? order.shippingInfo.email : order.email %> |
+                    <%= order.shippingInfo ? order.shippingInfo.phone : order.phone %>
             </p>
         </div>
 
@@ -62,14 +62,14 @@
                                     </div>
                     </div>
                     <div style="font-weight: bold;">
-                        $<%= ((item.price * item.quantity) / 100).toFixed(2) %>
+                        S/<%= ((item.price * item.quantity) / 100).toFixed(2) %>
                     </div>
                 </div>
                 <% }) %>
         </div>
 
         <div style="text-align: right; font-size: 1.25rem; margin-bottom: 2rem;">
-            <p>Total pagado: <strong>$<%= (order.total / 100).toFixed(2) %></strong></p>
+            <p>Total pagado: <strong>S/<%= order.total.toFixed(2) %></strong></p>
         </div>
 
         <div style="text-align: center;">

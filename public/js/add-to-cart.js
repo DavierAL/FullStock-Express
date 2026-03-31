@@ -1,5 +1,6 @@
 import { updateBadge } from "./header.js";
 
+
 const addToCartForm = document.querySelector('[data-js="add-to-cart-form"]');
 
 if (addToCartForm) {
